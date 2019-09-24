@@ -256,6 +256,38 @@ $ rails s
 To make it prettier:  
 <h1><%= article.title%></h1>  
 
+# Introduction to Legacy Code Challenge 
+## What is Legacy Code & How to work with it  
+Legacy code is source code inherited from someone else : source code inherited from an older version of the software.  
+Legacy code is difficult to work with in part due to a lack of automated tests.  
+
+To read code without proper documentation is an aquired skill.  
+
+## 7 techniques to unravel legacy code  
+* Rubber ducking  
+A well-known technique. Take a plastic rubber duck, place it next to the computer, and read the code out load to the duck. You're reading it to the duck because the duck will be there to listen without giving judgement. When you have to vocalize the code; you will see flaws and see where the code is breaking.  
+The rubber ducking is similar to having a pair programmer to discuss things with.  
+
+* Testing the software with Acceptance and Unit tests  
+An AUT cycle; add feature, add functionality, add feature etc. 
+Decide what to refactor => test the current code => perform refactoring => test the rewritten code => perform a regression test =>
+
+* Following the dataflow  
+Dataflows can be used to understand how the codebase works. By clicking around in the application to change the variable names slightly to see how the data flows, how the gems are being invoked etc. This can sometimes be the only way to really understand the code base.  
+
+* Reading the commit messages  
+Go to the different commits, click on the different commits to see what was added during that time. There are tools inside of Github to find a specific variable and see how it has changed over time.  
+
+* Changing the code  
+Change some bits and pieces to understand the dataflow. For example during CSS or similar.  
+
+* Debuggers  
+A good way to change a value, add a value and see what it does. Like debugger or PRY.  
+
+* Refactor code  
+An advanced technique; you take a bit of the functionality to make it even better: make change => refactor it => test fail : test pass etc is used to make a choice about wheter or not to refactor.  
+
+
 
 
 
