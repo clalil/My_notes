@@ -287,21 +287,59 @@ A good way to change a value, add a value and see what it does. Like debugger or
 * Refactor code  
 An advanced technique; you take a bit of the functionality to make it even better: make change => refactor it => test fail : test pass etc is used to make a choice about wheter or not to refactor.  
 
+# Web architecture  
+## What is web architecture  
+- Layer describe logical groupings of the functionality and components in an application.  
+- Tiers describe physical distribution of the functionality and components on separate servers, computers, networrks or remote locations.  
+- Only tiers imply a REAL separation.  
+- AUT cycle RoR dealt with all three things.  
+- You need to have the model, which is connected to the database while the database itself is a separate entitiy on the computer. The views are also separated.  
 
+We decide the layer (files and naming), the tier we do not decide: it is decided for us.  
 
+## Three Tier architcture vs Three layers  
 
+Layers: we can change as we like, unlike the tiers.  
 
+## The 3 tiers  
+- Presentation tier: the user's interface (what theya ctually see), it displays informatiomn related to different services that we have.
+It communicates with the other tiers by connection and displaying the result to the client. 
+- Logical tier: coordinates the application "spindeln i nätet" that makes logical decisions, process commands, evaluates and performs calculations. 
+- Data tier: the persistence layer, the place where information is stored and retrieved from the database system. It saves information from a database and save it to another database.  
 
+## MVC  
+Browser: the webpage/like Chrome, takes the user input => webserver => routes => dispatcher => controller (decides what to do with the information, and sends information back and forth depending on what the model deciees).  
 
+Example of how things are run:  
+Customer = The user input/sees from the view  
+Fridge = Database
+Products = View
+Waiter = Controller
+Kitchen = Model  
 
+There are some instances/an exception where the waiter would create the food in front of the user/customer.  
 
+In which part of the application am I inside at the moment? Should I be there? Should I be doing these things inside of the model or inside of the controller? Some heavy calculations would the model do due to higher processing power, not the controller.  
 
+Fat Models ? Skinny Controllers  
 
+## Useful concepts  
+HTTP Protocol: foundation of data communcation for the internet.  
+Functions as a request-response protocol in the client-server computing model (entering password on fb (client) sends request to the fb server (their server sends response back to the client side)). A client is whatever the user is holding in this/her hands in order to communicate with the internet.  
 
+URL (Uniform REsource Locator): a reference to a web resource that specifices it's on a  comp network and mechanisms for retrieveing it.  
 
+Request methods: 
+GET, POST, DELETE, PUT/PATCH
+**REmeber in and out by the end of the boot camp**  
+GET = asking for the server to give you some kind of information ie give me this user name, give me this form so I can log in, give me my image.  
+POST = save it to your database, create a new username, create something for me, take my image and save it for me (saving and creating are POST requests)  
+DELETE = Please delete my information on your system (blog post etc).  
+PUT/PATCH = please update the information from me that is already on your sever; my profile image etc  
+**Patch is getting out of style - mostly use Puts**  
 
-
-
+A sevrver: a computer programme or device that provides functionality for other programs or devices (clients).  
+E.g. web server, file server, mail server  
 
 
 

@@ -1,5 +1,19 @@
 # My notes on Git  
 
+# Pivotal tracker  
+**ice box:** +add story
+**name*** it e.g. Login
+**descrition:** user story
+**tasks:** feature test (we do not need to have unit test for this one because we are not saving any information, we are just using the available information)  
+**activity:** comments that are useful for the rest of the team.
+
+Drag stories to backlog manually. MAX 4 backlogs currently working on.
+
+Then:
+current iteration/backlog + start + unestimated + finished
+once merged: deliver! + accept button ok for now
+
+
 ## Git commands in the terminal   
 
 To create a longer, more structured commit message using VSC:  
@@ -87,7 +101,8 @@ Use if Yarn security threat when using older packages (eslint-utils error on Git
 ```
 yarn add eslint-utils@^1.4.1:
 ``
-Add axios library to read JSON file:  
+Add axios library to read JSON file: 
+
 ```
 $ npm i -S axios
 ```
@@ -105,4 +120,3 @@ close database:
 ```
 $ \q OR ctrl+d
 ```
-
