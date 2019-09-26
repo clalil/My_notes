@@ -341,7 +341,31 @@ PUT/PATCH = please update the information from me that is already on your sever;
 A sevrver: a computer programme or device that provides functionality for other programs or devices (clients).  
 E.g. web server, file server, mail server  
 
+# The magical params hash
+## What is the Params Hash?
+Parameter hash = a hash that stores informationed passed from the users browser. 
 
+Gives us the ability to use the user input in our application. i.e. When I send my login details it is sent to the paramters hash. It is a hash which job is to take user information and send it to the server.
+
+Main different three types:
+Query string params OR Route params OR Post params
+
+###Query string Params:
+This param is sent to the URL.
+When you google - the information is sent to this param. You can see it in the url as:
+…com/over/there?key=value
+=> a query string param is when we search for something!!
+- The query param always starts with a questionmark in the URL (/?q=hello/) i.e. (/?key=value/)
+
+### Route params
+- Links to a specific object (blog post, article) and uses the id of the object.
+- A URL with a number in the end is indicating a route param.
+- Objects will always have the same id and we can use this id to navigate between pages we want.
+
+### Post Params
+- Sends information in order to create an object. I.e. sends information from a form; stored in a params hash => creates/saves a new/existing object in our database. Most often done through a form.
+
+Params = a way to send specific information from the user to our application!!
 
 
 
