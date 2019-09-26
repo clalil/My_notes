@@ -428,7 +428,7 @@ It is NOT like netlify for this!
 - Confirmation validator; (validates :email, confirmation: true). Validates that both fields contain the same information.  
 ### Validator helpers:
 - Acceptance validation (validates checkbox on the UI, "confirm terms & conditions on a website").
-- Inclusion; validates that attribute's values are included in a given step. I.e. that the attributes we are passing in are relevant to what we want to create like not adding our email to our name.  
+- Inclusion; validates that attribute's values are included in a given set. I.e. that the attributes we are passing in are relevant to what we want to create like "is not included in the list".    
 - Length validator; validates length of attribute values like postcode length, pincode length etc.  
 - Presence; validates the specified attributes are not empty, like "mandatory filling ins on a website".  
 **Rails Guide has all the validations**
