@@ -120,9 +120,11 @@ If using ES6, the code also needs to be transplied using a transplier like [babe
 ### Node JS  
 [Node.js](https://www.reddit.com/r/javascript/comments/oq4p2/nodejs_can_anyone_eli5/)  
 
-
-
-
+# About the step defintions 
+- Features share the same step definitions. Hence, if we have the same step defintions for different feature tests, they will cause an unaumbigious match. That is why it is important to reuse our steps as much as possible, since Cucumber is very sensitive to commas etc.  
+- Basic steps should contain common steps that are shared by all of the functionality of our app like clicking on buttons, deleting forms etc.  
+- Assertion steps are the "Then I should see"/"And I should see", and is identified by an "expect". These are also, in many cases, shared between step defititions. These assertions should have a specific file for each feature where the functionality would be specific for that special feature, the rest can go into basic steps.  
+- Background is used when something is needed to exist in order for our assertions to work when we test the specific functionality. I.e. we need to be logged in in order to send email. The background "sets the table we eat from".  
 
 
 

@@ -402,3 +402,35 @@ $ heroku run rails c
 !!!Whenever we do a change - we need to do git push heroku master!!!
 It is NOT like netlify for this!
 
+### Warden  
+- Is a production Gem that helps us login and logout inside of the testing environment. "Given I am logged in" - shortens the steps for us.  
+- find_by == Active Record helper method. 
+- F.eks. Cucumber does not know where to start - it only goes where we tell it to, that's why we need Warden to "make it stop". 
+
+
+# Validations in Rails.  
+## What are validations  
+- A way for us to make sure that the information that is being saved into our database contains all the relevant data. Ensuring that no malicious data or harmful data is added to our database is very important, especially when handling user data.  
+- We use validations for safety, performance and user experience. Because we only want to add valid data; the most common cases are so that no-one can fill the dstabase with bad data. Performance reasons: less false data entries, fewer empty rows -> more concise database and helps us find our information more quickly and improves informance.  
+- We give error messages to the user when they pass in wrong data; this also reduces empty rows.
+
+## How Rails uses validation  
+- Sign-up button sends information to the Controller, which looks at what we want to do (create/save data), it sends it to the model (this is where the validation is done, might return an error to the user if the data is wrong), THEN it sends the data to the database! I.e, the MODEL has the security checks.  
+- create, create!, save, save!, update, update! When these methods are run, we can use validations on them, because these method sends data to our database.  
+- Validations are used in the model because they will then be closer to the database (due to the nature of the validation, it makes more sense to have this process as close to the database as possible i.e. the model). Validations inside of the database would call problems when testing and maintinging the database. 
+- Client side can use validations (inside of the browser), but it is often not enought - we have to use JS in order to validate on the client side. However, since JS can be turned off in the browser - which overrides that functionality.  
+- Controller validation are hard to maintain. The controller handles multiple functionalities (saving/creating/deleting etc) and we want to minimize this! I.e. the waiter should not need to consider more tasks that he actually has to i.e. his core functionality.  
+
+## How to add validations?  
+- We add a keyword called validate/validates to :name, presence :true.  
+- We add an attribute to what we want to happen.  
+- When we are creating an object in our database, it will check if .valid is true and not false before saving it to the database.  
+- Confirmation validator; (validates :email, confirmation: true). Validates that both fields contain the same information.  
+### Validator helpers:
+- Acceptance validation (validates checkbox on the UI, "confirm terms & conditions on a website").
+- Inclusion; validates that attribute's values are included in a given step. I.e. that the attributes we are passing in are relevant to what we want to create like not adding our email to our name.  
+- Length validator; validates length of attribute values like postcode length, pincode length etc.  
+- Presence; validates the specified attributes are not empty, like "mandatory filling ins on a website".  
+**Rails Guide has all the validations**
+
+
