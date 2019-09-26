@@ -1,5 +1,10 @@
 # My notes on Git  
 
+# Pull Requests  
+- After forking and git clone; always bundle the downloaded Rails project file.  
+- Run rails db.create db:migrate (create database only if you don't already have had created a database).  
+- 
+
 # Pivotal tracker  
 **ice box:** +add story
 **name*** it e.g. Login
