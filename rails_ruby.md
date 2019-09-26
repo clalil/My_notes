@@ -367,5 +367,38 @@ When you google - the information is sent to this param. You can see it in the u
 
 Params = a way to send specific information from the user to our application!!
 
+# Heroku  
+- Used to deploy our rails applications.  
+- Heroku is a cload platform where you can deploy applications and modify them.  
+- Heroku is different from Netlify, as we use this for Rails.  
+- Heroku is an easy platform for new developers, works well with Rails applications, good easy terminal CLI (work from your terminal/Computer Client Interface?).  
+- It's free to deploy small applications; not files stored in database etc.  
 
+AUT = Acceptance Unit Test Cycle  
+
+## Challenge - deploy your application to Heroku  
+- Download/Install Heroku  
+- SignUp on Heroku.com  
+- Deploy your application to Heroku  
+- Push up code to Heroku  
+- Migrate the database up on Heroku  
+
+1. Login Heroku
+2. If there is already an existing database: rake db:drop rake db:create
+3. $ heroku create <myname-rails-demo> 
+4. Gives you a URL for app
+5. Now you need to push the application to Heroku, so that it can access it.
+6. git remote -v (should should heroku remote)
+7. git push heroku master (I want to push my master branch to their master)
+8. Bundle with 2.0 and above, you will run into problems! There is a package for Heroku to fix that.
+9. Gives Rails error window.
+10. (heroku crates a database for us - do not need to create one) 
+$ heroku run rails db:migrate
+11. (To add articles) 
+$ heroku run rails c
+12. Getting into the environment/irb: Article.create(title: 'Hello', content: 'How are you?')
+(if it has an id - it persisted!!)
+
+!!!Whenever we do a change - we need to do git push heroku master!!!
+It is NOT like netlify for this!
 
