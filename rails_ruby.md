@@ -431,6 +431,67 @@ It is NOT like netlify for this!
 - Inclusion; validates that attribute's values are included in a given set. I.e. that the attributes we are passing in are relevant to what we want to create like "is not included in the list".    
 - Length validator; validates length of attribute values like postcode length, pincode length etc.  
 - Presence; validates the specified attributes are not empty, like "mandatory filling ins on a website".  
-**Rails Guide has all the validations**
+**Rails Guide has all the validations**  
+
+# Rails & Routing  
+- Routing creates pathways inside of our application so that we end up in the right controller and the right action.  
+- Resource routing:
+* GET = asks server for information (to read an article)  
+* POST = save some kind of information to the database (written an article and want to save it)  
+* PUT = helps us to update the entirety of an article (update everything inside of it)
+* PATCH = update a part of information (update a title of an article)
+* DELETE = deletes the entire article from the database  
+
+## CRUD, verbs and Actions  
+* CRUD = Create, Return, Update & Delete  
+* resources :articles (adding the keyword resources to a route file  and the controller of choice we get access to the data that responds with these).  
+* the #index actions job is to display a list of all articles/products etc    
+* this also means we will have a folder called articles inside of the view for our index file.  
+* HTTP verb (GET/POST), Path(/articles), Controller#Action(articles#index), Used for(Display an list of all articles) etc
+
+## Path and URL Helpers  
+* article_path returns /articles  
+* i.e. we add the word _path to whatever controller we are using, we can access it inside of our code. Like new_article_path returns /articles/new.  
+* edith_article_path(:id) returns a speicific article using an ID, e.g. article_path(11) returns /articles/11  
+* article_url returns http://domain.tld/articles  
+* set up root controller (action specifies where this goes to, in this case the root is index page): 
+```rb
+root controller: :posts, action :index
+```
+Acess the routes using:
+```rb
+rails routes
+```
+Use the only keyword to specify what we only want to access to (USE THIS):  
+```rb
+resources :articles, only [:index, :show, :edit]
+```
+
+## Non-resourceful routing  
+* Old way of writing routes: get '/articles/new, controller: :articles, action: :new', nowadays we just use the resource. Old ways can be used for API, but not writing for the actual new code. DO NOT USE!!!
+
+## Namespace (put inside of the routes.rb, NOT about functionality)   
+* When you have multiple controllers that deals with similar things, we can to organize it in a specific way.  
+```rb
+namespace :author do
+    resources :dramas, :magazines, :thrillers
+end
+```
+* Only helps us organize our controllers (admin interface). 
+This is a cleaner way than to write 'resources' for each one on one row.  
+
+## Nested routes  (Regards TO functionality)
+```rb
+resources :magazines do
+    resources :articles
+end
+```
+We need to be able to associate different models with each other. 
+http://guides.rubyonrails.org/routing.html (Routing from the outside in)
+
+
+
+
+
 
 

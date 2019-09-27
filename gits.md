@@ -1,13 +1,32 @@
 # My notes on Git  
 
 # Pull Requests  
-- After forking and git clone; always bundle the downloaded Rails project file.  
-- Run rails db.create db:migrate (create database only if you don't already have had created a database).  
+- After forking from the other repo to your own repo, copy url and git clone into a new local repo. 
+- **Always** bundle the downloaded Rails project file.  
+- Run rails db:create db:migrate (in most cases, you will only need to run db:migrate. Run db:create in case no database has been created).  
+- Create new development branch and check into it.
+- Add upstream as a remote using the remote URL. 
+- Push the repo to your own remote repo
+- Create new branch for each feature you work on; one user story = one feature and one pull request.  
+- Every time code is merged; you need to notify your team to pull from upstream.  
+- Track the other persons branch:
+1. git fetch <other_person>
+2. clone name of his/her branch <other_person/branch_name> as:
+git checkout -t <other_person/branch_name>
+=> Then git will notify you if the person makes changes in the branch!!
+- Always run **$ rake** before pushing to make sure all tests are passing.
+- Use poertry mode: omitting parenthesis in one place, means you should do that everywhere etc.  
+- Do not use old Ruby syntax:
+```rb
+fill_in field, :with => content
+vs
+fill_in field, with: content
+```
 - 
 
 # Pivotal tracker  
 **ice box:** +add story
-**name*** it e.g. Login
+**name** it e.g. Login
 **descrition:** user story
 **tasks:** feature test (we do not need to have unit test for this one because we are not saving any information, we are just using the available information)  
 **activity:** comments that are useful for the rest of the team.
@@ -21,7 +40,13 @@ once merged: deliver! + accept button ok for now
 
 ## Git commands in the terminal   
 
-To create a longer, more structured commit message using VSC:  
+To create a longer, more structured commit message using VSC: 
+
+Remove a remote git user
+```
+$ git remote remove <username>
+````
+
 ```
 $ git commit
 ```
