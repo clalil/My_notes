@@ -542,6 +542,107 @@ I.e. products, login, payment etc; add complexity!
 - Add chores ().
 - Add a few stories on the backlog and vote on these.
 
+# User stories
+A User Story is centered around three important questions:
+* Who's using the system?
+* What are they doing?
+* Why do they care?
+
+# Continous integration & Deployment
+## Continuos integration
+- Makes sure everything we add is compatible and integrated with our exisiting code base.
+- Software development practice where each developer is required to integrate code into a shared repository (upstream) several times a day.
+- Each check-in is then verified by an automated build, which allows teams to detect problems early. This is gonna be semiphore: it runs all of our tests and makes sure that what we want to add is compatible and works with our already built in code.
+- CI catches issues early, less time spent debugging, no more time to wait if code will work and reduce integration problems allowing you to deliver software more rapidly.
+## Practices
+- Maintain a single source repo.
+- Automate the build (Semiphore).
+- Make your build self-testing.
+- Every commit has to build on an integration machine.
+- Test in a clone of the production of the environment.
+- Make it easy for anyone to get the latest executable version.
+- Automate ddeployment.
+## How it works
+- Developers check out code into their private workspaces.
+- When done, commit the changes to the repository.
+- Then CI server monitors the repo and checks out changes when they occur.
+- The CI server builds the system and runs unit and integration/acceptance tests,
+- The CI server releases deployable artefacts for testing.
+- The CI server informs the team of the successful build.
+- If the build or test fails, the team will be notified immediately.
+## Continious deployment
+- To make sure everything we add to the code base actually gets deployed.
+- Everytime something passes the test we will push up.
+- Travis/Semaphore are equal.
+- Circleci is compatible with client applications like react (what sempahore is for rails applications)
+- How it works: CI goes green and application gets deployed, it goes red it goes back to the developer.
+## Test coverage metrics
+- Checks how much of the code has actually been tested.  
+1. Create an account.
+2. Log in (check out repos).
+3. Choose CA.
+4. Click "on" on the application.  
+5. Press "details"; shows what you need to do inside of the terminal.  
+6. Go to terminal and be on the "development" branch.
+7. Pull latest version; git pull upstream development.
+8. git checkout -b coveralls
+9. Open code base.
+10. Go to Gem-file, add **gem 'coveralls', require: false'** under development, test
+11. bundle!
+12. Go back to code base.
+13. Go to "features", to the "env.rb"-file. Enter (on top of the file to make all lines aware of it):
+```rb
+require 'coveralls'
+Coveralls_wear!('rails')
+```
+14. Go to spec folder and rails helper, add the same things there (at the top!!)
+15. Go to Semaphore, use Semaphore classic link (login) and then login with github.
+16. Authorize render text on Semaphore. Press "start project" using GitHub. Only public repos.
+17. Authorize again. Important you see organization craft academy.
+(If you cannot see the upstream repo then you need CA to set you as an admin!!)
+18. Press 'slowfood-june-2019_team_1" under CA.
+19. Select branch => select development. Wait for analyzing.
+20. Check language, version, database.yml (sometimes Semaphre gets this wrong and you need to make sure it is 'pg' for postgresql).
+21. Before we can merge anything; every test should go green through Semaphore. 
+```rb
+bundle exect rake db:setup
+```
+...Is ususally not needed if we already have db:create and db:migrate.
+22. Remove the setup commands that you do in one single command list. 
+23. Edit job under setup:
+```
+  bundle install --deployment --path vendor/bundle  
+  bundle exec rake db:setup  
+  bundle exec rake   db:test:prepare  
+  COVERALLS_REPO_TOKEN=your_coveralls_token   bundle exec rake ci:tests
+  ```
+24. Copy repo token you have on Coveralls replace with **you_coveralls_token** to tell coveralls where to save it.  
+25. Press "build with these settings".
+26. Press "Add collaborators and build".
+27. Everytime we push up to a branch that is part of our PR it will run whatever that we're trying to add using the code above.
+## Push to Heroku
+1. Open terminal (right folder!).
+2. Run **heroku create your-name** + enter
+3. Go to Heroku in the browser (dashboard).
+4. Go to the app you just created.
+5. Go to "deploy".
+6. Press "github" for deployment method.
+7. Connect to Github (only one person per team).
+8. Search for repositories to connect to; CA slow-food.
+9. Connect.
+10. Choose "wait for CI",  "enable automatic deploy" for the right git branch.
+11. Done!
+12. Deploy branch (manual deploy). 
+13. If application error; view logs, go to the terminal and run heroku logs. 
+14. Read error, check bundle in Gem-lock.
+15. Go to "more", run console "heroku run"....ask coach!!
+16. run **bundle version**
+check if incorrect or not.
+If needed, remove Gemfile-lock as it is automatically generated when we "bundle".
+17. Run bundle.
+18. Gemfile should not have the right version.
+
+
 
 
 
