@@ -489,6 +489,23 @@ end
 We need to be able to associate different models with each other. 
 http://guides.rubyonrails.org/routing.html (Routing from the outside in)
 
+# Controller, Router etc. 
+* A controller's purpose is to receive specific requests for the application. 
+* Routing decides which controller receives which requests. 
+* A view's purpose is to display this information in a human readable format. 
+* It is the controller, not the view, where information is collected. 
+* If you want to create a new HTML form, you use the ERB language which is designed to embed Ruby in HTML, i.e. articles/new.html.erb 
+
+# HAML. 
+Online translators can translate erb into HAML. (Avoid the hash rockets!)
+HAML is like YAML: very sensitive and unneccessary spaces will have dire consequenses! Tabs or spaces need to be the very same inside of VSC.
+
+VSCO set up specific tab or space setting.
+
+## Semantic UI GEM
+- Rather than using a CDN.  
+- Only works with JQuery, i.e. may not work in other projects where we do not use JQuery.
+
 
 
 
