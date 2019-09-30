@@ -506,6 +506,42 @@ VSCO set up specific tab or space setting.
 - Rather than using a CDN.  
 - Only works with JQuery, i.e. may not work in other projects where we do not use JQuery.
 
+# Design sprint
+## Spend time preparing what to build
+- Less issues down the road.
+
+## Basics of a design sprint
+- Design sprint is a time constraint five-phase process (i.e. in our development process we talk about sprints. One week is often considered a part of a sprint (one week, two week or a month sprint). The design sprint is when we go over the features we need to have.) to reduce the risk when bringing a new product, service or feature to market.
+- We want to create a bunch of user stories that go over the features we want to add. A bunch so that we can pick and choose what we want to create in a specific order.
+- As a group; everyone sits down and discusses what a user story does. We assess it as a team so everyone knows how and what and why.
+### Purpose
+- MVP = Minimum Viable Product. A product with just enought features so satisfy a customer; to provide feedback for future product develpment. We use our user stories to create our MVP.
+- We always want to have a functioning product at each step of the way.
+* Example: LinkedIn MVP core is basically a site where you display your CV to others. One layer is security so only one person can change its own CV, another layer is the networking part, another layer is the chat functionality etc...
+* Example: a car's main purpose is to move a person from plance A to place B; the first core functionality could be a skateboard, then a kick bike, then a bicycle (more distance covered), motorcycle (more speed) and car (more security). etc.
+
+## Lo-Fi's ("a white board")
+- A tiny representation of a concept, a use flow, or an information structure created for getting quick feedback and improving the product.
+- We use a Lo-Fi to make sure that everyone in the group understand what we are trying to build.
+- E.g. we create a Lo-Fi for a login page. By adding these small things there will be no confusion as to what everything is and why.)
+
+## Wireframes
+- Often done with collaboration with a UX designer.
+- Very time consuming and should only be done once you know what you are going to develop.
+- Used to provide a visual understanding of a page early in a project to get stakeholders to become interested.
+
+## Checklist DEsign sprint
+- Start with the idea and lo-fis
+- Decide what flow you will work on first, how will it interact with the application step by step.
+- Cross check if the wireframes meet the requirements of the client/user.
+- Create acceptance criterias to each story (go into each User story and add acceptance criteria (tasks). Once all tasks are checked off - the user story is completed.). Approx 4-5 tasks per User Story. If you have more tasks than that - you probably need to split your user story into several.
+- Create ERD (optional) is basically a way to illustrate how your database looks; how is all connected?
+- Prioritize stories (in what order should we build these different features? Remeber the MVP! Does it make sense to build a login functionality if we do not have any products on our website yet?)
+I.e. products, login, payment etc; add complexity!
+- Do a dry-run with the team memebers (time consuming and tiresome process but needs to be done, not uncommon further down that there is a big difference between team members how an application should be). I.e. everyone should know where the graphics and functionality are supposed to go so that every team member is on the same page.
+- Add chores ().
+- Add a few stories on the backlog and vote on these.
+
 
 
 
