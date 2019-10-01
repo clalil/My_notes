@@ -642,6 +642,75 @@ If needed, remove Gemfile-lock as it is automatically generated when we "bundle"
 17. Run bundle.
 18. Gemfile should not have the right version.
 
+# HAML
+## Introducing a faster better way of writing HTML
+- A pre-processor of HTML, whatever we write in HAML will be parsed to our HTML.
+- Reduces code due to no closing tags, uses indentation for nesting markup, a more concise syntax which makes coding your View layer faster.
+- It doesn’t affect render time or client side performance, but simply reduces coding efforts and makes the development more efficient.
+- It can be used in many Ruby frameworks such as RoR, and Middlemans Rails and Sinatra, but also in Node.JS, Net etc
+- Usage; use it as a replacement for ERB files. If you use bundler, add this to your gemfile: ``` gem ‘haml’ ```
+- Files named filename.html.haml will be interpreted by HAML instead of ERB.
+```rb
+%body  
+ #wrapper   
+  .stuff
+    %a{href: “#”} Top
+=> body tag, div, div, link named “Top”.
+```
+### Tag names
+Use % and then the name of the tag.
+e.g. 
+><body_></body_> == %body
+- id:s are referenced the same way as in CSS i.e. 
+><div_ id=“my id”>
+#my-id
+><h1_ id=“article”>
+>%h1#article
+- HAML assumes you want a DIV unless you say something else.
+- Classes:
+```rb
+<div class=“wrapper”>
+.wrapper
+<h1 class=“content”>
+%h1.content
+%div.wrapper.container.row#my-id
+is a div, with two classes, inside of a row with a id-tag my-id
+IS THE SAME AS
+div.wrapper.container.row#my-id
+```
+- If you leave out the %tag and only include the .class or #id a div tag will still be created for you!!!
+## Nesting
+- Is important as there are no closing tags in HAML.
+- Tags are nestbed by indentation only.
+- Text can go at the end of the line if there’s no other content ot nest. Can also be nested itself(required with other nested content).
+
+### Craft Academy website GitHub
+%h1
+ = “Tech ba <br> bla”.html_safe
+(html_safe makes it possible to enbed real html tags inside of the haml text
+OR
+%h1= “Tech ba <br> bla”.html_safe
+
+**Inline style:**
+%p{style: ‘max-width: 29em;’}
+ %strong
+  With Craft…
+
+### NewsFlash
+= partial :’new_flash_en’
+
+extracting other files into one file.
+```rb
+Intake.future_dates(0..2).each do |intake|
+ %h4. leader
+  = intake.course_name
+  = ‘-‘
+  = intake.start_date.strftile(‘%-d %b %Y’)
+```
+
+
+
+
 
 
 
