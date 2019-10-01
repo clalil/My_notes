@@ -707,14 +707,49 @@ Intake.future_dates(0..2).each do |intake|
   = ‘-‘
   = intake.start_date.strftile(‘%-d %b %Y’)
 ```
-
-
-
-
-
-
-
-
-
-
-
+# Rails Recap
+## App folder
+- Use to store all of our code.
+- Assets folder holds all of our CSS/Stylesheets and images folder/files.
+* Config folder is used for out JS.
+//= link_tree ../images
+//=link_directory ...stylesheets .css
+- Channels (where we have anything used for push notifications or chat functionality). Works similar to controller functionality.
+- Controller folder always has an application controller (takes in all of the code and functionality from the ActionController core frame).
+* Concerns folder contains our refactored code/extracts functions to keep our code DRY. I.e. the place where the store our refactored code. A partial is only used for the views; could be a navbar. I.e. in the FizzBuzz challenge our refactored piece of code would be put inside of the concerns folder (HAS_ZERO_REMAINDER). However, it should just be the code that is used throughout the application and our controllers.
+* Helpers folder: when we want to create helper methods for ourselves like form helpers. We can add these to our application helper.
+* Javascript folder; adding initializers and js code we wrote ourselves.
+* Jobs folder (ActiveJob::Base), could be used for trash collection etc.
+* Mailers is a folder that deals with any eamils being send from/to our application (ActionMailer::Base).
+* Models stores our business logic that we creates as classes.
+* Concerns folder inside of Models folder; where we keep our refactored code for our different models.
+* Views has different templates for layouts etc. Post folder contains the different views for our different pages.
+* Bin folder (seldom tocuh this file, has setup files).
+- Config folder
+* Environments (same as in Gemfile); i.e. when we are for example in the development environment that will only trigger certain Gems. If we are testing or having real server; we will need to change the environments.
+* Initializers: contains files that will kick in when our server starts. Can be start a webserver, create a welcome message etc. Anything we need to initialize before our app starts running. I.e. if a Gem requires us to create an initializer, then we would put it here.
+* Locales is a folder where we store all of our translation files.
+* Webpack is used for JS and when we want to make different configurations for different environments.
+* Application.rb is where we turn off the generators when we are using Rails. When we run a generator (f.eks. new controller), a generator is a method for scaffolding code. A generator will set up the correct name etc and will also create the connected files. Apart from creating the views it also creates stylesheets; which can bloat our application with all files. That is why we configure our generators to only create what we need and not to create unneccessary files.
+* Cable: where we set up our different servers that we will use for Action Cable.
+* Credentions.yml.enc; credentials is a file that holds all the credentials that we use (like encrypted password, API keys or information for user account). To keep our information safe; we store it inside of our credentials file. We can unlock this information with the help of our **master.key**. If all developers has thay key inside of their system then they can access it. The master.key is never uploaded to GitHub since it is by default added to .gitignore.
+* database.yml is a configuration file for our different environments.
+* puma.rb is a webserver we use and we can configure it in there.
+* routes.rb is where we keep all of our routes like 'root controller: :posts...'
+* spring.rb is used to upload the right ruby version from our computer.
+* storage.yml is used to upload things to amazon etc; where me make the configurations and pulls in the credentials from our credentials file.
+ - db folder
+ * schema.rb is a representation of how our database should look.
+ * seeds.rb file; is used to save us from having to manually create page content each time we run the server. It goes into a rails console and rails pulls things out from our database to rails. 
+ ```rb
+ rails db:seed
+#seeds the database.
+```
+* lib folder; here we can also use assets that are stored..
+* log folder is interesting when we are debugging because it shows all the entries we did in our server. It shows all the different errors. This does not that that much space. Videos etc are what takes space.
+* node_modules
+* public folder (the static pages that are displayed when your server is done, these are cached by google and other search engines).
+* storage (information about Active:Storage)
+* test folder (Rails has a built in test framework called mini-test; that's why we do 'skip test' when we create our application because we use other frameworks like Cucumber).
+* tmp (database settings)
+* vender (where we store static, third party code that we cannot add in any of our other folders).
