@@ -26,4 +26,16 @@
 - Travis/Semaphore are equal.
 - Circleci is compatible with client applications like react (what sempahore is for rails applications)
 - How it works: CI goes green and application gets deployed, it goes red it goes back to the developer.
-- 
+
+# Controller, Router etc. 
+* A controller's purpose is to receive specific requests for the application. 
+* Routing decides which controller receives which requests. 
+* A view's purpose is to display this information in a human readable format. 
+* It is the controller, not the view, where information is collected. 
+* If you want to create a new HTML form, you use the ERB language which is designed to embed Ruby in HTML, i.e. articles/new.html.erb 
+
+# User stories
+A User Story is centered around three important questions:
+* Who's using the system?
+* What are they doing?
+* Why do they care?
