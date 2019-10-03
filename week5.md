@@ -220,3 +220,48 @@ https://editor.ponyorm.com/user/pony/PhotoSharing/designer
 - The foreign key has the customer_id in the table; would only mostly be used in connections to other tables.
 - The primary id in each table is only referenced when you do something in that table.
 - For any table to speak and connect to another table it will always need the foreign key.
+
+# Cartify Gem
+- Default is "Add to cart" for clicking in Cartify.
+- Background needed is "Given the following products exist: name, description and price. Finding the available attributes in the schema.rb file.
+- "resources" keyword in a controller gives us access to all of the paths, but that is bad practice, we should be using the __,only: [:index]__ which gives us only the index action.
+- Cartify requires the email in order to login.
+## Installing
+0. Add the cartify gem in the top of the gemfile because we want it to be available throught the entire application.  
+1. $ rails generate cartify: install --scope assets
+2. $ rails generate cartify: install --scope routes
+3. $ rails generate cartify: install --scope initializer
+4. This creates a lot of assets, adding requirements.
+5. We will need JS in our application, to test the JS we need to add the @javascript on the very top of our feature file for that particular test (otherwise it renders w/o js).
+6. Edit the resources for :products to include both [:index, :show], after cartify has added the show option.
+```rb
+resources :products, only: [:index, :action]
+```
+7. Clone the neccessary migrations
+$ rails cartify:install:migrations
++ rails db:migrate
+8. Add the recommended code to our User Model. 
+9. Go to initializers and cartify.rb (modify if different naming conventions were used inside of our own models).
+10. Modify feature steps accordingly: "And I click on "Add to cart" on "Pizza"", Then I should see "1 item".
+11. Add steps
+```rb
+Given('I click..') do   
+|element, product_name|  
+product = Product.find_by_name  (product_name)    
+within("#product_#{product.id}") do  
+click_on element  
+end  
+end
+```
+12. expected_content (between the pipes) when looking for expected_content ist string etc
+13. Will give unable to find (capybara), are all fixed inside of the views!! Inside of the Product view, add the id for products using embedded Ruby
+tr id= dom_id(product)  
+14. New error; 
+
+# Mob session w. O  (re-watch)
+- __belongs_to__, means that we can actually create a product from the Category.  
+- means Product has an association to Category/owns something, using __has_many__ (gives us ability to call main.products.create) means the opposite: that Category has many products/Category is associated with products.  
+- Generated when products_references (at the end of creating a model).
+- Use "Associations" for spec for expecting Category to have many :products, and vice versa for belong_to :category for Product spec.
+- FactoryBot understands if you just write the name of the model you need. 
+- 
