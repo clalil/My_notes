@@ -151,3 +151,72 @@ object.reload
 ```
 # Poetry mode  
 - If you can omit the parenthesis; you do it.  
+
+# Relational Databases  
+## What is a database
+- A place where you store information.
+- We use a database because it is much easier to handle things with a database instead of a YAML file etc. We want a database when we know we will have a lot of user input that we need to store/a lot of things going on. If we stored this in a YAML file it would quickly explode in size. I.e. as soon as we know we will store a lot of data we will need a database.  
+- A database is a collection of information that is organized so that it can easily be accessed, managed/organized and updated.
+### DBMS
+- DBMS: Database Managagement system (toolset); a collection of programs that will do certain tasks for us. These systems will allow us to access the database and manioulate the data. It helps us in the represenation of data and helps us control access to the database by various users.
+- F.eks: we only want us programmers and admins to be able to access the database; the database management system will help us do just that.
+#### Types of DBMS
+- Navigational DBMS
+- Relational DBMS (the one we are using during this BC)
+- SQL DBMS
+- NoSQL DBMS
+
+## Relational DBs
+- Are a collection of data items organized as a set of formally-described tables from which data can be accessed or reassembled in many different ways w/o having to reorganize the database tables.
+- Each table contains data in predefined columns. These columns represents the attributes we create for our Models. Like "title" for our Article Model.
+- Each row contains a unique instance of data defined by the columns. The rows represents different/unique instances of our Model. Like "Article title "Hello World".
+- I.e. it is essentially a table with columns and rows.
+- A way for us to uniquely identify another table instance is to use a **foreign key**; ie a way to connect two different tables/instances of tables with each other. F.eks. We have a DB which is a fridge, the tables are like shelves in the fridge where one is "veggies" and one is "bread"; so we have different tables inside of the same DB.
+- Example: a table describes a customer with columns, another table would describe an order.
+
+## Relational DBMS apps
+- MySQL
+- PostgreSQL (works well w. Rails)
+- Microsoft SQL
+- MariaDB etc...
+
+## Data Models
+- Entity Relationship Diagram (ERD): real-world objects/item with properties/attributes. Every attribute is defined by its set of values called domain.
+- Relationship: logical association among entities. "A book has many chapters". These are the different relationship we have with our different models.
+**1-1** ("One person has one id card")
+**1-many** ("A book has many chapters)
+**many-1** ("Many students to go the same classroom")
+**many-many** ("Many restaurants have many dishes")
+### Entitity relational Diagram
+- Used to visualise how our different models are connected, to have a structured approach as programmers.
+- A Gem can be downloaded for this.
+https://editor.ponyorm.com/user/pony/PhotoSharing/designer
+- The arrows in above user table represents the relationship. "One user has many followers and followee", "one user has one image, but the image can have many tags."
+### SQL
+- Structured Query Language
+- Rails takes care of writing SQL code for us.
+- The lanaguage we need in order to talk to our database is SQL.
+### ORMs
+- Object-relational mapping libraries map database tables to classes.
+- The attributes we have in our models we directly translate into our database table.
+- i.e. our Models (it's essentially a class) "title" etc will translate as "title" as one column etc..
+- Example: if a database has a table called customers, our program till have a class named Custromer. Rows corresponds to instances of the class Customer, within the object and attributes are used to get/set each column.
+## ActiveRecord
+- The M in MVC. 
+- IS the way for us to connect to our database using Ruby.
+- AR is a core framework of the Rails framework. This is the way that Rails speaks to our database; which is why we only need to learn AR and not SQL.
+- AR represents the models and the data.
+- Represents the association between our different models.
+- Represents inheritance hierarchies throuhg related models.
+- Validate models before they get persisted to the DB. (validates the data is real)
+- Perform db operations in an object-oriented way.
+### Naming conventions
+- Database table (plural with underscores separating words). Rails actually looks at the naming and will draw conclusions based on our naming conventions. i.e. order_items, people, articles.
+- Model class needs to be singular. e.g. Person, OrderItem, Article. The database will be named automatically for us, we only need to name our Model.
+### Schema Conventions
+- Foreign keys (a way for us to make a connection to a different model i.e. one model called product and one model called sales). Name following the pattern: singular_snakecase (user_id, order_item). (helps us to identify another table). F.eks. **id** is the primary key and **customer_id** is the foreign key in a Customer Model.
+- Primary keys (set automatically by Rails). AR will use an integer column named "id" as table primary key. 
+**Summary:**  
+- The foreign key has the customer_id in the table; would only mostly be used in connections to other tables.
+- The primary id in each table is only referenced when you do something in that table.
+- For any table to speak and connect to another table it will always need the foreign key.
