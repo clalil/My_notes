@@ -264,4 +264,61 @@ tr id= dom_id(product)
 - Generated when products_references (at the end of creating a model).
 - Use "Associations" for spec for expecting Category to have many :products, and vice versa for belong_to :category for Product spec.
 - FactoryBot understands if you just write the name of the model you need. 
+
+## Partials
+- Using Partials; Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With a partial, you can move the code for rendering a particular piece of a response to its own file.  
+- Partial; only kept inside of our views. Refactored code like navbar, footer that we would use althrough our pages.
+- To render a partial as part of a view, you use the render method within the view: 
+```rb
+<%= render "menu" %>
+```
+- This will render a file named _menu.html.erb at that point within the view being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder.  
 - 
+
+# Mid-course project
+- “To find yourself, think for yourself” - Socrates
+- We decide what to code, what to write, what features to implement, how to delegate assignments and which planning tools to use.
+- We will start working with APIs (third party services).
+- Our job is to pick an API and build an application around it: * build an application in Rails that consumes an external API. * Add authentication and authorization with OAuth like FB or Google. * Add payment gateway like Stripe. * You will design, plan and execute the development together with the group.
+- Resources: Weather aAPI, Movie API, Cat API, Chuck Norris API, NASA API, Music API, Sky Scanner API, TV-Guide API.
+- The API needs to be restful/have the key restful.
+- We need to come up with an idea and start the design sprint during this weekend.  
+
+## Fetch API from Rails
+1. Search Chuck Norris API.
+2. Copy the random joke url.
+3. There are multiple ways to access an API using Rails.
+4. Gem rest-client (simple HTTP and Rest client).
+5. Gemfile add: ‘gem ‘rest-client’’ in ‘rails etc part’
+6. Bundle.
+7. Open Rails console (loads entire application for us): $ rails c
+8. PRY: resp = RestClient.get(‘https….’)
+9. PRY: resp.class (give resp clirent response)
+10. PRY: resp.methods (shows all methods)
+11. PRY: resp.body (shows the API url response) in JSON (Javascript Object Notation). It is always sent to us as a string, formatted in a specific way.
+12. PRY: JSON.parse(resp.body) transforms it into a real JSON object.
+13. PRY: joke = JSON.parse(resp.body)
+14. PRY: joke[‘value’] can be displayed on the website.
+15. PRY: joke = JSON.parse(RestClient.get(‘http’).body)[‘value’]
+16. PRY: joke (displays the joke fetched from the API).
+17. Outside PRY: config/routes root controller: :application, action: :index
+18. app/controllers/application_controller:  (normally we would not do this inside of the application_controller but another controller): def index @joke = JSON.parse(RestClient.get(‘http’).body)[‘value’] render ‘custom_folder_name_whatever’:whatever (if you change folder and files manually) (if you dont do anything your view template needs to be in the same folder where your controller corresponds, if you do sometjng else you cannot have render blank) end
+19. views/index.html.erb <%= @joke %>
+
+# Weekend challenge (week 5)
+- This weekend we are going to prepare for a “sprint review”; means we are going to finish off as much functionality for our sprint intervire:
+- - Finish off as much functionality as possibke,
+- Add styling and make the app presentable.
+- Prepare a demonstration of the app and its functionality for monday morning.
+- Deploy your app.
+
+# Sprint review:
+- Held at the end of a sprint to expect the Increment and adapt the Product Backlog if needed.  
+- This is an informal metting, and the presentation of the increment is intended to elicit feedback and foster collaboration.  
+- Described in the Scrum Guide.  
+- The whole reason for the sprint review is to give feedback and understand what we need to do in order to improve our work flow.  
+## What do we discuss?  
+- The Product Owner explains what BackLog items have been “done” and what has not been done (PivotalTracker = BackLog).  
+- The development team discusses what went well, and how the issues were solved. I.e. “we had a Gem that was deprecated and needed to use another Gem.” Differs from case to case basis.  
+- Development team develops the changes that have been done and asks about the Increments (why was not this developed? priorities discussion).  
+- Discuss the product backlog as it stands and add new targets that we need for the next sprint (revised requirements). Take them to the next design sprint.  
