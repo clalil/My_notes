@@ -292,12 +292,16 @@ def facebook
  @user = User.from_omniauth(request.env['omniauth.auth'])
  #a model we need to create ourselves. Inside of the request..is everything that we are getting from facebook about the user. the request.env we're calling on the env method/@env inside.
 
- if @user...
+ if @user.persisted? 
+      sign_in_and_redirect @user, event: :authentication
+      set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
  #devise method 
- else session..
+     else
+      session['devise.facebook_date'] = request.env['omniauth.auth']
+      redirect_to new_user_registration_path #or should it be url?
+    end
  #redirects us to user registration path
-
-#Snapshot #1 insert
+end 
 
 #We inherit all of the functionality from the DeviseController itself, that is why we should *not* generate views with DEvise, as we get them automatically. We only would like these files if we would like to modify them in any way.
 
@@ -320,7 +324,26 @@ module OmniAuthFixtures
 #A module is basically a class with methods, where we can extract functions/objects from it.
   def self.facebook_mock
     {
-      ...
+      provider: 'facebook',
+      uid: 1020552...,
+      info: {
+        email: '',
+        name: 'T',
+        image: 'he'
+      },
+      credentials: {
+        token:
+          'EA',
+        expires_at: 1517,
+        expires: true
+      },
+      extra: {
+        raw_info: {
+          name: 'T', 
+          email: 'th', 
+          id: '1020552...'
+        }
+      }
     }
   end
 end
@@ -328,9 +351,19 @@ end
 
 #Time to define from_omniauth inside of our User Model
 
-def self.new_with_session...
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
+        user.email = data['email'] if user.email.blank?
+      end
+    end
+  end
 #error handler
-def self.from_omniauth...
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+  end
 #pass in omniauth.auth as the 'auth' argument.
 # finds or creates the user
 #devise generates a random password for the user
@@ -354,8 +387,6 @@ Rails.application.credentials.facebook[:app_secret]
 # Will be blocked, needs to be pushed to Heroku. The app needs to be added as a valid url to fb.
 
 #$git push heroku oauth:master (pushes the entire oauth (any named branch, in this case "oauth") into the master branch)
-
-
 
 ```
 - When using OAth we get redirected and give permission to use the application. 
