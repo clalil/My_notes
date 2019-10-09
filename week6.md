@@ -360,3 +360,64 @@ Rails.application.credentials.facebook[:app_secret]
 ```
 - When using OAth we get redirected and give permission to use the application. 
 - The Gem **gem 'omniauth-facebook'** is used in production as well as for this purpose. This only gives us facebook; google etc has its own omniauth gem. However, devise is always needed.
+
+# Form Helpers in Rails
+- A form is an input field where you can add some data that is sent to the server. 
+- webform/web form or HTML form on a webpage allows a user to enter data that is sent to the server.
+- HTML form (input fields with text/placeholder). Once the button is clicked the information is send as params to our model.
+```rb
+<form action="/some url">
+<input type="submit">
+#not a button or a link, but an input type with the value 'Submit'.
+form_for = #used when creating an instance Model e.g. for the user class using @user
+#*depriceted* and needed a Model.
+```
+- **form_tag** was used when passing information w/o a Model. The information is send directly using the helper method text_field_tag.
+- The form is used when we want to send information to the backend w/o having to use a Model.
+- Terms&Conditions checkbox wouldn't work b/c it's not an attribute to the user model and hence cannot be used with the form_for. 
+- **form_with** is a combination of both form_for (passing information w. model, depricated) and form_tag (when passing information w/o models). Form_with does both things.
+## Using form_with URL
+```rb
+<% form_with url: posts_path do |form| form.text_field :title %>
+```
+## With scopes
+- Scope down = we want to scope it down to sending a specific param/a specific key.
+```rb
+<% form_with scope: %>
+```
+## With new instance of a model
+```rb
+<% form_with model: Post.new %>
+```
+## With an existing model
+```rb
+<% form_with model: @post %>
+```
+## Submit button!
+```rb
+<% form.submit %>
+#will generate (input type submit):
+#when we have the form and input type submmit it will generate an input type and value.
+```
+- Form fields don't have to correspond to model attributes.
+- All forms genereated by 'form_with' will be submitted by an XHR(Ajax) request by default. In many cases tyou *dont* want this. What Rails does for us is that it adds locak:true by default inside of our form_with model: @user.
+## Form_with
+- A lot of form controls to use: (text_area (:comment, :text, size: "20x30"), password_field(:login, :pass, size: 20); shows stars instead of actual password, hidden_field(:user, :token(hide for user)), search_field(:user, :phone), .telephone_numer(:user,...))
+- .color_field gives you a color picker tool by default.
+## Options
+:url (the form submits to, similar to values passed for link_to, you may use a named route directly.)
+:method (The method to use when submitting the form, usually either 'get' or 'post')
+:format (the request format of the route the form submits to, useful when submitting to another resource type like :json, f.eks if we wanted to save data to a API we would like to use JSON format)
+:scope (determines how the submitted parameters are grouped in controllers)
+:model (whenever you want to create a new instance of a class, you use :model)
+:local
+:authencity_token
+:skip_enforcing_utf8
+:builder
+:id
+:class
+:data
+:html
+
+
+
