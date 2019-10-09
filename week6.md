@@ -249,3 +249,114 @@ localhost:3000/blog/asdf?test=1
 <%= text_field_tag :title %>
 #The params value of :title is made by yourself and Rails matches them up, the values affect how they are shown in the params hash in the log for rails server.
 ```
+
+# OAuth
+```rb
+#feature/usr_can_log_in_fb.feature
+
+Feature: User can log in using their FB credentials
+  As a user
+  In order to simplify the sign up/sign in processs
+  I would like to be able to authenticate myself using fb
+
+Scenario: Visitor clicks on 'Login with FB' and gets authenticated
+  Given I visit the landing page
+  When I click on 'Login with fb'
+  Then I should be on the home page
+  #expect(current_path).to eq root_path
+  And I should see 'Successfully authenticated from fb account'
+
+#index.html.erb
+<% if user_signed_in? %>
+<%= link_to `Logged in as: #{current_user.email}`, root_path%>
+<%= link_to 'Sign out', destroy_user_session_path, method: delete %>
+<% else %>
+<%= link_to 'Login with FB', #link is given in rails routes after installing gem
+'user_facebook_omniauth_authorize_path' %>
+<% end %>
+
+#Go to the User model, add:
+:omniauthable, omniauthproviders: [:facebook#, :google, :github]
+#Gives us extra routes in our rails routes
+
+#Go to routes to tell devise we want to handle the call backs
+devise_for :users, controllers: {
+  omniauth_callbacks: :omniauth_callbacks
+}
+#Any callbacks will be handled by omniauth
+#Create new controller: omniauth_callbacks_controller.rb and enter the manual information needed accordingly:
+
+class OmniauthCallbacksController *<* Devise::OmniauthCallbacksController
+
+def facebook
+ @user = User.from_omniauth(request.env['omniauth.auth'])
+ #a model we need to create ourselves. Inside of the request..is everything that we are getting from facebook about the user. the request.env we're calling on the env method/@env inside.
+
+ if @user...
+ #devise method 
+ else session..
+ #redirects us to user registration path
+
+#Snapshot #1 insert
+
+#We inherit all of the functionality from the DeviseController itself, that is why we should *not* generate views with DEvise, as we get them automatically. We only would like these files if we would like to modify them in any way.
+
+#Now go to config/initializers/devise.rb, configure the omniauth for devise:
+Devise.setup...
+#connecting routes
+config.omniauth :facebook
+...
+#How to use fb as a developer; on your own account you need to specify yourself as a developer and add a bunch of stuff..but omniauth has some methods to help us test this.
+
+#Go to feature folder, env.rb file, add:
+Before do
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth:AuthHash.new(OmniAuthFixtures.facebook_mock)
+  #A module we will add, like "Cocktailservice"
+end
+
+#In support-folder: add new file called omni_auth_fixtures.rb
+module OmniAuthFixtures
+#A module is basically a class with methods, where we can extract functions/objects from it.
+  def self.facebook_mock
+    {
+      ...
+    }
+  end
+end
+#we will go into tokens later down the line, overkill now. 
+
+#Time to define from_omniauth inside of our User Model
+
+def self.new_with_session...
+#error handler
+def self.from_omniauth...
+#pass in omniauth.auth as the 'auth' argument.
+# finds or creates the user
+#devise generates a random password for the user
+#Atm the only information we use from fb is the user email.
+
+#Need to add the provider from omnioath fb to our user model (uid is sort of an advanced id, provider is how the user got created basically; email is the first one and facebook can be another, as in this case)
+$ rails g migration AddOmniAuthToUsers provider:string uid:string
+$ rails db:migrate
+
+# Go into FB as developer
+
+#Go into master.key
+facebook:
+  app_id: 2426..
+  app_secret: ''
+
+#Reference keys in devise.rb
+Rails.application.credentials.facebook[:app_id],  
+Rails.application.credentials.facebook[:app_secret]
+
+# Will be blocked, needs to be pushed to Heroku. The app needs to be added as a valid url to fb.
+
+#$git push heroku oauth:master (pushes the entire oauth (any named branch, in this case "oauth") into the master branch)
+
+
+
+```
+- When using OAth we get redirected and give permission to use the application. 
+- The Gem **gem 'omniauth-facebook'** is used in production as well as for this purpose. This only gives us facebook; google etc has its own omniauth gem. However, devise is always needed.
