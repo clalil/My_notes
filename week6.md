@@ -450,5 +450,86 @@ form_for = #used when creating an instance Model e.g. for the user class using @
 :data
 :html
 
+# Stripe
+- Stripe is not the cheapest platform but for educational purposes it is the best choice.
+- To use Stripe you need to sign up for the service.
+- "Viewing test data" should be picked after signing in, you will however not be able to chanrge clients money unless you provide the neccessary details.
+- "Developers" => "API keys" => "pk_test" should always be the start of a test api key. Both the published key and the secret key should never be together, however just the published key or the secret key alone cannot be used for anything, only used together they become "hot keys".
+- Even in test mode these keys should not be distributed outside of the team, i.e. it means that we cannot check them into our public repositories or private repositories even.
+## Stripe applications
+```rb
+#we can use webdrivers gem because chrome driver etc has a deprecation warning
 
+#'2.36' as Chromedriver.set_version
+#You can use headless drivers also when implementing stripe, however in this test case we want to use the real browser and therefore disables headless
+
+#FactoryBot is only used for creating items that you would else have in your db table, not when you're fetching external data from an API.
+
+#instance variable is automatically passed into our view from our Model @courses = Courses.all
+
+@courses.each do |course|
+.div =dom_id(course)
+  = course.title
+  = link_to "Buy", "#"
+end
+# link_tag is a helper method in Rails  
+#the '=' is to enter Ruby into the view, else it doesn't execute or render it
+
+#@javascript tag is needed in the feature test to make cucumber use the chrome driver when we want to inspect it w. binding.pry t.ex.
+
+$ rails g controller charges new create --skip routes
+#Creating a Charges controller
+# add new_charge_path(course) inside of the index instead of "#"
+
+#Add params to charges controller
+def new
+  @course = Course.find(params[:id])
+end
+
+#Create new.html.erb and add steps to make feature pass
+@course.title
+
+#Now we need to mount the form
+Then("I fill in the Stripe field {string} with {string}") do |input_field, value|
+  stripe_frame = find("iframe[name='_privateStripeFrame5']")
+  case input_field
+  when "CC Number"
+    field = 'cardnumber'
+  end
+  within_frame(stripe_frame) do 
+    find(field).send_keys(value)
+  end
+end
+
+#Go into application.html.erb and add some js
+
+<script src="https://js.stripe.com/v3/"></script>
+
+#Go into new_path html
+<%= form_with url: charges_path, local: true, method: :post, id: :charge_form do %>
+div id="card-element"
+<% end %>
+#local = we want to re-render the page and not make an ajax call.
+
+#Go into application.js
+require("@rails/ujs").start()
+#Enhancement for Rails
+require("turbolinks").start()
+#Related to page load?
+
+const initiateStripe = (stripeForm) => {
+  const stripe = Stripe('pk_test_value')
+  const elements = stripe.elements()
+  const card = elements.create('card')
+  card.mount('#card-element')
+}
+
+document.addEventListener('turbolinks:load', () => {
+  let stripeForm = document.getElementById('charge_form')
+  if(stripeForm) {
+    #debugger
+    initiateStripe(stripeForm)
+  }
+})
+```
 
