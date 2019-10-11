@@ -532,4 +532,49 @@ document.addEventListener('turbolinks:load', () => {
   }
 })
 ```
+# Associations
+
+```rb
+#belongs_to
+#Association 
+class Book < ActiveRecord::Base
+  belongs_to :author
+end
+#Is a one-to-one connection with one model. Book needs to have an author.
+
+class Supplier < ActiveRecord::Base
+  has_one :account
+end
+#has_one association is pretty simple; one account has one supplier (each instance of a model contains another instance of a model, i.e. it needs to have another model associated to it). Book does not need to have an author.
+
+has_many :books
+#An author can have many books, has_many associations indicates one or many connections with a model. Usually, a book belongs_to an author, and an author has_many books. It can have zero or more associations with a model.
+
+has_many :through
+#An association often used to set ut many to many connections with another model.
+
+has_and_belongs_to_many
+#Creates a direct many-to-many connection w/o interviening models. 
+
+#Generating post model with foreign keys to user and forum
+$ rails g Post body:string user:references forum:references
+
+#A Forum needs to have the association of has_many :posts
+
+#A User needs to have the association of has_many :posts
+
+#A Post cannot exist w/o :user and :forum i.e. belongs_to :user and belongs_to :forum
+
+forum = Forum.create(name: 'Sports')
+
+post_1 = Post.create(user_id: 1, forum: forum, body: 'first comment!!')
+
+.errors #method shows why data didn't persist into the database.
+.errors.full_messages #Can be used to display an error flash for the user.
+
+has_many :post_likes, through: :posts, source: :likes
+#Goes through all of the posts and looks at how many likes that post has.
+
+
+```
 
