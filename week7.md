@@ -24,6 +24,48 @@ est
 cmd  
 
 # AUT cycle in React
-- 
+- Not using 12.10 version of NPM? Issues with it.
+- React Create App is scaffolded and comes with more additions that what the library React in itself does.
+## Cypress
 ```js
+//Initiating and installing cypress
+$ ./node_modules/.bin/cypress open
+// silent npm so only cypress is run and not pop up the browser (will not work in NPM 12.0.0)
+"cy:open": "npm start --silent & cypress open"
+$ nvm use 11.6.0
+to change version.
+//in the json, change this to make the server silent, doesn't work on windows:
+"cy:open": "BROWSER=none npm start & cypress open"
+
+//In VSC, json:
+"extemnds"...
+"globals": {
+  "cy": "cy"
+}
+
+//Extensions VSC: Cypress Snippets
+```
+- Test files go into our integration files, of course.
+### Our first test
+```js
+//New file in integrations folder
+//e.g. displayEmplpyeeList.js
+//just like in RSpec, we use the describe blocks
+//mocha is what makes it like rspec
+describe('/index Displays a list of employees', () => {
+  it('when user visits the page', () => {
+    //callback
+    cy.visit('http://localhost:3000')
+      .get('section[name="header"] h1')
+      .should('contain', 'Employee List')
+      .should('not.contain', "Hello")
+      .should('have.length', 1)
+      //first arg is matcher, 2nd is value
+      //1 since there is only 1 h1
+  })
+});
+//uses the 'contain' matcher passed in as a string
+
+//Cypress is js-based.
+
 ```
