@@ -17,10 +17,13 @@
 - BMI Challenge: simple logic. 
 - Copper test challenge: back-end; does it matter? Client in React, back-end in Rails. Testing fetched data from API.
 - Now it's time to learn how to 'think in React'.
-My team: Sverrir
 ### Shortcuts in VSC extension
 imp  
 imn  
 est  
 cmd  
 
+# AUT cycle in React
+- 
+```js
+```
