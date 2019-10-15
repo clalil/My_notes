@@ -232,3 +232,106 @@ import { Container } from 'semantic-ui-react'
 ```
 - In Cypress you can use "*" symbol right to the "back" symbol to get suggestions on selectors, or inspect the browser as usual.
 - 'state' is enough inside of the actual class, but the 'this.state' is to reference back to the class.
+
+# Semantic UI with React
+## Install Semantic UI
+First, run the following terminal commands:
+>$ yarn add semantic-ui-react semantic-ui-css
+OR
+>$ npm i -S semantic-ui-react semantic-ui-css
+```js
+//add to index.js to ensure the entire application has access to it.
+import 'semantic-ui-css/semantic.min.css';
+
+//import style into component of choice
+import { Container } from 'semantic-ui-react'
+```
+## About styling with Semantic UI in react
+- Semantic UI is a fully featured CSS library that allows us to create responsive layouts using human friendly HTML.
+- There is a Semantic UI wrapper; Semantic UI React, that is especially made for React.
+- https://react.semantic-ui.com
+- Good examples, live examples.
+- 'semantic-ui-css' is the actual default css package from semantic ui, while the 'semantic-ui-react' is the specifics for React itself.
+- Import what you need:
+```js
+import {
+  Container,
+  Form,
+  Grid,
+  Header,
+  Message,
+  Segment,
+} from 'semantic-ui-react'
+
+<Header as="h1" textAlign="center">
+<Grid centered columns={3}>
+```
+### Navigation bar in React w. UI
+```js
+//add separate function component
+<>
+<Navbar />
+</>
+
+//inside of component
+import './Components/NavBar.css'
+
+return (
+  <Menu stackable className="logo">
+  <Container>
+  <Menu.Item>
+    BMI Calculator
+  </Menu.Item>
+  </Container>
+  </Menu>
+)
+
+//Use CSS file inside of component to add specific CSS styling to that particular component.
+
+//Using Semantic UI it seemds you need to override the fonts with important?
+//content of NavBar.css
+.logo {
+  font-size: 15px !important;
+  font-family: blalla !important;
+}
+```
+## Props in Semantic UI
+```js
+super()
+this.state = {
+  alignment: 'center'
+}
+
+changeAlignment = (e) => {
+  this.setState({
+    alignment: e.target.innerText
+  })
+}
+
+buttonClickHandler = (e) => {
+  this.changeAlignment(e)
+  this.test()
+}
+
+test () => {
+  //debugger
+}
+
+
+<Header>
+textAlign={this.state.alignment}
+</Header>
+
+<DisplayResult />
+<div>
+<button onClick={this.changeAlignment}>Left</button>
+
+<button onClick={this.buttonClickHandler}>Center</button>
+
+<button onClick={this.changeAlignment}>Right</button>
+
+<button onClick={this.changeAlignment}>Justified</button>
+</div>
+```
+- On every input type of component used in Semantic, we can pass in a lot of different props(as="h1") is a prop, "textAlign=Center" is a prop etc...
+- You can always debug checking "event"."target" and see what is abailable and what is not.
