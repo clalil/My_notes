@@ -335,3 +335,16 @@ textAlign={this.state.alignment}
 ```
 - On every input type of component used in Semantic, we can pass in a lot of different props(as="h1") is a prop, "textAlign=Center" is a prop etc...
 - You can always debug checking "event"."target" and see what is abailable and what is not.
+
+# Cooper Challenge
+- Learn how to build an API using RoR.
+- Learn about CORS
+- Learn avout testing API endpoints with Rspec using so-called request specs
+- Learn how to authenticate users from a React application
+- Learn how to make a post request to an API from a client
+
+## Persist data
+- User login
+- Rails to save the user data
+- Back-end in Rails (Model, Controller)
+- Client-side in React (View)
