@@ -348,3 +348,56 @@ textAlign={this.state.alignment}
 - Rails to save the user data
 - Back-end in Rails (Model, Controller)
 - Client-side in React (View)
+
+# Rest on Rails  
+## What is REST
+- An artitechtural style of building applications (we provide inter-operability; a computer system om the internet. That means we can connect with a computer system on the internet). REST is the artitechtural style that also uses the rrequest-response cycle.
+- A proven design pattern for building loosely-couples, highly-scalable applications. 
+- Stateless; it's based on request-response architecture, that you send off a request and gets one back. But it does not remmeber what it receives and sends (has no state). 
+## What is state?
+- Application state (it should live on the client, and we supply with each client request, we need to make sure that the client/not server is responsible for remembering the data.)
+- Resource State; we need to make sure that the state that is passed in is persistent if the client dies (needs to be persisten on the client side).
+## What is statelessness?
+- Client state should not be stored on the server between requests.
+- Each individual request should have no context of the reqtests that came before it.
+- It is stateful when/if we have designed it to remember what has happened before. Stateless; designed NOT to remember.
+- The server should not remember what information it receives; the consequence is that the client shuld send all of the information that tje client needs. This also means we need to send all of our important data every time we do a request; because the servers do not remmber what happens.
+### Why statelessness?
+- statelessness makes the web scale. The design is great when the application is separated from the data.
+- visibility: every request contains all context neccessary to understand it. Looking at a single request is sufficient to visualize the interaction.
+- reliability: since a request stands on its own, failure of one request doesn not influence others.
+- scalibility: the server does not have to rememer the application state, enabling it to serve more requests in a shorter amount of time.
+## To think about in REST
+- Whenver we deal with the CRUD actions we are dealing with REST.
+- CRUD actions are robust, consistent and understandable within the entire industry; the same kind of resources over the different kind of protocols.
+- Names identifies resources; 'get_cocktails' is shown in the URL when connection to the API.
+### What is resource identification?
+- Each request should uniquely identify a single resource; when dealing with a show/index action we are dealing with one resource.
+- Each request that modifies the database shpuld act on one and only one row of one and only one table.
+- Requests that only fetch information should get zero or more rows from one table.
+## What is REST?
+- The information that is returned as data.
+- To make sure the system understands what information we're getting we need to use the standardized formats: XML or JSON (JSON nowadays).
+- The returned information shpiuld be sifficoent for the client to uniquely identify and manipulate the database rows in question.
+## REST in RoR
+- RoR is built upon this.
+- Default way of building resources; also built upon basic CRUD methods that are automatically connected to a HTTP protocol.
+- Uniform interface (anyone with programming knowledge will know what these type of actions are)
+- Convention over configuration! I.e. we do not think about how to set things up that RoR does for us.
+### Nouns vs Verbs
+- Try to use nouns instead of verbs when naming resources.
+- Use concrete names and not action verbs (person ist for can/begin) etc.
+## APIs in RoR
+- Why build our own API? We want to use an API b/c it is our easiest way to connect to an external resource. We can skip the interface and straight go to the back-end and then bring that to our front. Instead of communcating with servers using links/forms, we can get it directly using our API.
+- Why use RoR to create API insgtead of Sinatra? Answer: it gets us all that we want and is built upon the RESTful architecture for free w. RoR. Otherwise, we need to configure all of this manually. RoR also gives us a lot of security with its conventions. Also, we can use a lot of testing.
+The command:  
+>$ rails new my_api --api
+creates an application that is api only, and does not have all the logic needed for a front-end application.  
+- We can add our own api functionality to extend functionality of an already existing application. 
+- Easy versioning of the API, i.e. different versions of the API v0, v1, v2 etc... which we can use to ensure backwards compatibility. I.e. when we update our API then people might loose all of their functionality when upgrading; once we updated and add functionality to our new version then it is up to the client to update to the new version or not; we provide new entry points to it. I.e. new user = new functionality, old user = still working functionality.
+### Request specs
+- Request specs are for APIs what acceptance tests are for web applications.
+- Monolit application = an application entirely built in e.g. RoR.
+- Industry standard is to do request specs in rspec.
+- Whenever you deal with APIs you need to have request specs first.
+- 
