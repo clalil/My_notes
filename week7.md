@@ -400,4 +400,45 @@ creates an application that is api only, and does not have all the logic needed 
 - Monolit application = an application entirely built in e.g. RoR.
 - Industry standard is to do request specs in rspec.
 - Whenever you deal with APIs you need to have request specs first.
-- 
+
+# 3 Simple Truths in Software development  
+- Path to programmer happiness is doing the work that is relevant to our clients.
+- "Change is the only constant in life".
+- "Change can be scare, but if I embrace it it can help me move further in my career as a developer."
+- Book: "The agile Samurai" by Jonathan Rasmusson
+### Three simple truths  
+1. It is **impossible** to gather all the requirements at the beginning of a project.
+2. Whatever **requirements** you do gather, **are guaranteed to change**.
+3. There will **always** be more to do than time and money will allow.
+- Accepting the first truth means you're not afraid to begin your journet without knowing everything up front.
+- There will always be questions that we cannot answer or formulate in the beginning.
+- Accepting the second truth means you no longer fear or avoid change. You know it is coming.
+- And **by accepting the third**, you no longer **gets stressed** when your to-do list exceeds your time and resources to deliver. The icebox doesn't matter as long as we keep on working with the deadlines that we have in every sprint, instead of worrying about the increasing amount of features inside of the ice-box. The only time frame to worry and focus on is the current sprint - the sprint we are after - than to worry about anything else.
+- "Change is inevitable and that is OK."  
+
+# Data Visualization (weekend challenge)    
+- Style Cooper Test ReactJS Application
+## To-do:
+- Add Semantic UI React Package
+- Add some basic styling
+- Display historic data as a diagram using ChartJS
+- Read documentation!
+- This weekend challenge will be about styling the application and visualize the user saved entries.
+- Display the ugly list using chart.js
+```js
+>react-chartjs-2
+//All diagrams used are components and data is passed as props.
+
+//- In the current implementation, do we check the result of the Cooper test on the client or the server?
+//- What are the pros and cons of doing it in that way?
+```
+- Challenge time: before 9 am monday.
+- If you refer to, or have in whole or partially used the solution of a coach or another student, please put in a link to that in your README.
+- If you have a partial solution, still check in a partial solution to GitHub.
+- Submit your repo and screenshots (and url to deployed app) by 9 am before the stand-up. 
+- Add screenshots to README.md of styling for page and the chart diagram.
+- Deployed on Netlify.
+- Deployed on Heroku, if downgrade the version it will work.
+```js
+
+```
