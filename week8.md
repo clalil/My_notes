@@ -56,3 +56,58 @@
 - Deliveries: Depending on the project managements method you choose. Form your own strategy.
 - Requirements: meet them in a creative way. If a client has asked you to do certain things; they need to get what they want. You need to be mindful that you have the user perspective and the perspective of the client.
 - Always be able to answer why you have prioritized in a certain way. 
+
+# Design Sprint Recap
+## Basics of a design phase
+- Design sprint is a time-constrained, five-phase process that uses design thinking to reduce the risk when bringing in a new product, service or a feature on the market.
+- We sit down as a team and dive down into what we are going to build, it's a planning phase where we kind of makes sure that everyone in the development team knows what is going on. 
+- The entire group needs to be totally in agreement on what and how something is going to be built.
+- During the first design sprint we envison how the MVP will look as the final product. 
+## Purpose
+- A Minimum Viable Product is a product with just enough features to satisfy early customers, and provide feedback for future product development.
+- Create user stories to build a MVP.
+- We basically add the core functionality of the application to take it from A to B.
+- First we need to ask our customers what they think of the application.
+## Lo-Fis
+- Representation or image of how our application should be created; one low-fi for each feature. 
+## Wireframes
+- More advanced version of Lo-Fis, often done together with the designer. Used in a later stage in teamwork with a UX designer. (We do only need Lo-Fis so far).
+- Aim of it is to provide a visual understanding of a page early in the project to get stakeholder and project team apporoval.
+## Checklist
+- Start with the idea and the wireframes (Lo-Fis).
+- Check if the wireframes meet the requirements.
+- Create acceptance criterias to each stories.
+- Create ERD (optional); visuellt how the databases are intertwined(?).
+- Prioritize stories.
+- Do a dry-run with the team members.
+- Add chores.
+- Add a few stories to the backlog and vote on these.
+- Start with core functionality!
+## Epics
+- Epics are a large bodies of work that can be broken down into smaller chunks called stories.
+- F.ek.s Stripe functionality can be broken down into "Add product to chart", "Add details", "Make payment", "Receive confirmation email".
+- Have 4-5 stories to an epic.
+- Have one user story for each epic?
+- The Epic is the book and the user stories are the chapters of that book.
+### When to use an epic?
+- The time to use an epic is something big like a payment gateway, to create articles etc. Basically, when you're unsure of the process (like adding geolocation) and it contains multiple steps and if it's a big feature (will take a couple of days to finish off) and to me a new feature.
+## Voting 
+- The voting itself is a process when you take a user story and assigns it a complexity point (how complex a user story is; how long time it will take to implement, how much functionality do we need to add, how much previous research do we need? All of those things add to the complexity of the user story).
+- Why vote? To keep track of the velocity, for future reference, create a baseline (how capable is our group?).
+- Voting is for assessing complexity points of a user story.
+## Voting questions
+- Have I done it before, or has any other team member done it before?
+- Is there any good documentation?
+- Is it easy to test (time consuming to get into place?)?
+- Do we need external resources(do we need to call in someone to help/hire them or do we have that competence in-house?)?
+- Time equivalent(will it take days, weeks or months?)?
+- Business value(how highly prioritized is this functionaloty and how hard to implement?)
+- Assess the complexity; 1-3 points (easy-harder). Everyone needs to be in agreement (unanimous result of voting in the group), if not - have a discussion.
+- When do we do the assessing of complexity/voting; right before we start developing those stories. I.e. we add a couple of user stories to the backlog and then we assign the complexity points. We can assign them before the daily scrum, drag chosen user stories to backlog from icebox, vote on them.
+- You cannot as an individual go in and assign a complexity point w/o the agreement of the entire group.
+- If you for some reason have to change the point of the story, the whole group has to go in and give an OK i.e. re-vote on a story.
+- Use slack to vote simultaneously on the user story complexity points.
+- Asses, re-evaluate, assess etc...
+## Chart flow:
+Application => Requirements (2) => Epic (2) => User stories (2) => Acceptance criteria(3)  
+- I.e. When multiple acceptance criteria is met; the user story is met. When the user stories are met, the epics are done. When the epics are done - the requirements are met. When the requirements are done - the application is done.
