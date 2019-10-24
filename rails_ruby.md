@@ -753,3 +753,6 @@ Intake.future_dates(0..2).each do |intake|
 * test folder (Rails has a built in test framework called mini-test; that's why we do 'skip test' when we create our application because we use other frameworks like Cucumber).
 * tmp (database settings)
 * vender (where we store static, third party code that we cannot add in any of our other folders).
+
+# Factory Bot
+Configs included if: FactoryBot::Syntax::Method you may use (:create) and not (FactoryBot:create) in the test environment, because it is already in the environment.

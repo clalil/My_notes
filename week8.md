@@ -111,3 +111,309 @@
 ## Chart flow:
 Application => Requirements (2) => Epic (2) => User stories (2) => Acceptance criteria(3)  
 - I.e. When multiple acceptance criteria is met; the user story is met. When the user stories are met, the epics are done. When the epics are done - the requirements are met. When the requirements are done - the application is done.
+
+# [Agile methodologies](https://youtu.be/502ILHjX9EE)
+- The agile approach is a business oriented approach; i.e. business people and developers must work together daily throughout the whole process.
+- It is also a people oriented approach; trust the people to get the job done and build projects around motivated individuals.
+- It is a learning oriented approach; continuous attention to technical excellence and good design enhances agility.
+- Agile practices vs Agile mindset (doing agile vs being agile).
+- Scrum is an agile framework for completing complex projects; simple but not easy.
+* Roles: ScumMaster, Product Owner and Scrum Team
+### Artifacts:  
+* Product backlog (bucket for requirements)
+* Sprint backlog(subset of PB, highest priorities deemed by Product Owner)
+* Burndown Chart (chart indicating how much work is remining in the sprint)
+## Scrum + XP (Extreme programming)
+- Behavior Driven Design (BDD)
+- Test Driven Development (TDD)
+- Pair programming
+- Automated testing
+- Refactoring
+- Code Reviews
+- Continuous integration
+- Continuous deployment
+- Great combo because it leverages the popularity of Scrum with the sound engineering practices of XP.
+- This approach is used at Craft Academy boot camp.
+- We will face pitfalls and slipperly slopes in the newsroom challenge when trying to connect our API to the client side.
+## Agile myths
+- Agile is a silver bullet (nope, agile requires hard work and great planning but anything in a group will always expose risk to conflict etc)  
+- Agile is a anti-documentation (nope, documentation us as means of communication and gets estimated, sized and prioritized like any other user story, our tets are our documentation)  
+- Agile is anti-planning (nope,a lot of planning goes into this; the daily stand-up is sort of a planning meeting as well as during iteration/sprint planning meetings)  
+- Agile is undisciplined (nope, you have to test, get feedback, ship software regularly, change and update plan and deliver bad news early)  
+- Agile requires a lot of rework(as every other method..., not a silver bullet. any creative work with a deadline faces the same challenges; you've got to let go of the pride and rethink your solution if it doesn't fix the problem anymore)  
+- Agile doesn't scale (it scales as every other software delivery process; not that well. the only thing we can do is to scale things down!)  
+- Agile is anti-architecture(agile is not a religion; follow the company way)
+## Agile: Incremental and Iterative
+- Working software quickly and early
+- Less costly to change requirements
+- Easy to test and debug during smaller iteration
+- Customers can respond to each built
+- Lowers initial delivery cost
+- Better risk management
+
+You can become a good developer with good habits in just 12 weeks, but not the best programmer in the world, of course.
+
+# Authentication w. Oliver (Rails side)
+```rb
+#/devise_token_auth.rb
+
+#Need to change token from js to text because we use text in cooper challenge and not json format that we send.
+
+#/session_spec.rb
+#We nwws to add the data response due to devise but can be nil b/c we do not use them.
+
+$ rails g migration AddTrackableColumnsToUsers
++ add needed columns for remaining columns
+
+```
+# Authentication w Oliver (React side)
+- Package: redux-token-auth
+- With this package we need to have redux implemented on our application.
+- Is a package built for react and redux with rails backend that uses devise token auth.  
+```js
+//create cypress test
+userCanLogin.spec.js
+beforeEach(() => {
+  cy.server()
+})
+
+it('successfully', (() => {
+  cy.route({
+    //stub out response
+    method: 'POST',
+    url: 'http://localhost:3000/v1/auth/sign_in',
+    //check path in backend for POST
+    //i.e. url to stub out
+    response: 'fixture:successful_user_login.json',
+    //here we store what we stub out
+    status: 200
+    //add status for 'happy path'
+  })
+
+  cy.visit('http://localhost:3001')
+  cy.get('#login-button').click()
+  cy.get('#login-form').within(() => {
+    cy.get('#email-input').type('user@mail.com')
+    cy.get('#password-input').type('password')
+  })
+  cy.get('#submit-login-form').click()
+  cy.get('#welcome-message').should('contain', 'Hello user@mail.com')
+}))
+
+//400 non-existing page, 402 non-authorization in general
+
+//Go into component to create btn
+<button id="login-button">Login</button>
+
+//need to add event to render loginform
+state = {
+  renderLoginForm: false
+}
+
+renderForm = () => {
+  this.setState({
+    renderLoginForm: !this.state.renderLoginForm
+    //bang means set to the opposite of what it is!
+  })
+}
+//use arrow functions do not need to bind this
+
+render() {
+  let loginForm
+  
+  if (this.state.renderLoginForm) {
+    loginForm = (
+      <div id="login-form">
+        Login Form
+      </div>
+    )
+  }
+}
+
+<button onClick={this.renderForm}id="login-button">Login</button>
+
+{loginForm}
+
+//next step, create the actual input fields
+
+  if (this.state.renderLoginForm) {
+    loginForm = (
+      <div id="login-form">
+        <input id="email-input" placeholder="Email"/>
+        <input id="password-input" type="password" placeholder="Password" />
+        <button id="submit-login-form">Submit</button>
+      </div>
+    )
+  }
+
+//It is now time to install the dependencies...
+>$ yarn add redux react-redux redux-logger redux-thunk redux-token-auth
+
+//in order to use the redux-token-auth dev we need to wrap our whole application around redux; which gives us the ability to have an overall state. Every component in the application can push up to the "redux store", which is a global state for the entire application".
+
+//in index.js, configure
+
+import { Provider} from 'react-redux'
+import configureStore from './state/store/configureStore'
+
+const store = configureStore
+
+ReactDOM.render(
+  <Provider store={store}>
+  <App />
+  </Provider>
+  document.getElementById('root')
+);
+
+// create folder and files inside of src folder
+
+>$ mkdir state
+>$ mkdir store
+>$ touch configureStore.js
+
+// Add to configureStore...a LOT
+thunk, logger etc...
+//logger shows how redux changes
+
+//in state folder, create new
+>$ mkdir reducers
+>$ touch rootReducer.js
+//import stuff..
+//in the redux state there will be a key called reduxtokenauth that will have som initialized values and functionalities that it inherits
+
+//inside of state folder
+>$ mkdir actions
+>$ touch reduxTokenAuthConfig.js
+//validates user and exports functionality
+//adds a lot...
+
+//Go back to app.js
+//add two new states
+email: '',
+password: ''
+
+inputChangeHandler = (e) => {
+  this.setState({
+    [e.target.name]: e.target.value
+  })
+}
+
+//inside of the loginForm variable, add name="email" and name="password" to the different input fields as well as onChange={this.inputChangeHandler} to each of them
+
+//import to App component:
+import {signInUser} from '../state/actions/reduxTokenAuthConfig'
+import {connect} from 'react-redux'
+//added to add connection to..
+
+//add to bottom of App.js
+
+const maoStateToProps = state => {
+  return {
+    currentUser: state.reduxTokenAuth.currentUser
+    //here we want to use some of the states from redux and put it inside of some of our props for this component
+  }
+}
+
+const mapDispatchToProps = {
+  //we need to tell redux what we want to use inside of this component, that is why we need to map that out
+  signInUser
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
+//go to underneath inputChangeHandler
+<button onClick={this.handleLogin} id="submit.."></button>
+
+handleLogin = () => {
+  const { signInUser } = this.props
+  const { email, password } = this.state
+  signInUser({ email, password })
+   .then(console.log('woooo'))
+   //we do not want to do anything after this...
+   .catch(error => {
+     console.log(error)
+   })
+   //once signed it, redux switches the state isUserSignedIn from false to true
+}
+
+//add to render
+let welcomeMessage
+if(this.props.currentUser.isSignedIn) {
+  debugger;
+}
+
+//stub out fixtue successfull login
+{
+  "data": {
+    "id": 1,
+    "email": "user@mail.com"
+  }
+}
+
+//go to reduxTokenAuth...
+//to userAttributes, change credentials to mock response in fixture file;
+email: "email" etc..
+
+//inside of app component:
+let welcomeMessage
+if(this.props.currentUser.isSignedIn) {
+  welcomeMessage = <p id="welcome-message">Hello {this.props.currentUser.attributes.email}</p>
+}
+
+//+ add the object {welcomeMessage} inside of the return
+
+```
+
+# Serialization (the process of converting objects/datatypes to a format that can be transported across the network or persisted)
+```rb
+let!(:article) {3.times {FactoryBot.create(:article)}}
+#request specs
+it 'lists a collection of articles' do 
+get '/api/articles'
+#Doing get request to specific URL, the RESTful route
+json_resp = JSON.parse(response.body)
+#grab response body and turn into json response to have something to compare with
+expect(json_resp['articles'].count).to eq 3
+#check if array returned to us contains 3 objects
+end
+
+ArticlesController
+articles = Article.all
+render json: { articles: articles}
+#built in method in Rails to serialize json into objects
+
+#Network calls takes time, they are time consuming and our users want speed.
+
+#gem ActiveModelSerializers is an extension library that allows us to work with serialization in a different way.
+
+# Add gem, then go into configuration file in config/initializers and create new file called eks "ams.rb" (activemodelserializers):
+ActiveModelSerializers.config.adapter = :json
+
+#replace render json in controller with:
+render json: articles, each_serializer: Articles::IndexSerializer
+#will give error, not created yet
+
+$ rails g (generates a list of available commands issued for generators)
+
+$ rails g serializer Articles::Index
+#Adds folder etc..
+#Add more attributes to it
+attributes :id, :title, :published_at
+#Adding :published_at returns error b/c no such exists yet
+def published_at
+  object.created_at
+  #the serializer is accessible to us through 'object'
+end
+
+#add change to display fornat differently
+object.created_at.to_formatted_s(:long)
+#You can modify your data on the API instead of doing it on the client side.
+
+#Add to the serializer index
+#belongs_to :author or do like with published_at i.e. create new method
+
+
+
+```

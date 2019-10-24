@@ -1,5 +1,20 @@
 # My notes on Git  
 
+## Git cherry picking
+Check git logs:
+>$ git log --oneline
+Check what the logs contain:
+>$ git diff <commithash>
+**Never ever merge a feature branch into another feature branch, only ever branch off the development branch.**
+1. Branch off (choose commit to cherry pick to the other branch)
+2. >$git cherry-pick <commithash> (obs, only works if you have no conflicts with parent branch)
+3. >$git log --oneline (check if this worked)
+4. Git commit for cheery pick
+5. Repeat to add all cherry-picks needed i.e. $ git cherry-pick <commithashofchoice>
+!!Avoid adding already merged commits.
+6. >$ git push origin/pia <newbranchname>_<existingbranchname> --force
+i.e. merge with force push changes into old branch
+
 # Pull Requests  
 - After forking from the other repo to your own repo, copy url and git clone into a new local repo. 
 - **Always** bundle the downloaded Rails project file.  
