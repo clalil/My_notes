@@ -285,7 +285,23 @@ thunk, logger etc...
 >$ mkdir actions
 >$ touch reduxTokenAuthConfig.js
 //validates user and exports functionality
-//adds a lot...
+import { generateAuthActions } from 'redux-token-auth';
+
+const config = {
+  authUrl: "http://localhost:3000/v1/auth",
+  userAttributes: {
+    email: "email"
+  }
+};
+
+const {
+  registerUser,
+  signInUser,
+  signOutUser,
+  verifyCredentials,
+} = generateAuthActions(config);
+
+export { registerUser, signInUser, signOutUser, verifyCredentials }; 
 
 //Go back to app.js
 //add two new states
@@ -298,7 +314,17 @@ inputChangeHandler = (e) => {
   })
 }
 
-//inside of the loginForm variable, add name="email" and name="password" to the different input fields as well as onChange={this.inputChangeHandler} to each of them
+//inside of the loginForm variable, add name="email" and name="password" to the different input fields as well as onChange={this.inputChangeHandler} to each of them:
+    if (this.state.renderLoginForm) {
+      loginForm = (
+        <div id="login-form">
+          <input onChange={this.inputChangeHandler} name="email" id="email-input" placeholder="Email"/>
+          <input onChange={this.inputChangeHandler} name="password" id="password-input" type="password" placeholder="Password"/>
+          <button onClick={this.handleLogin} id="submit-login-form">Submit</button>
+        </div>
+      )
+    }
+
 
 //import to App component:
 import {signInUser} from '../state/actions/reduxTokenAuthConfig'
@@ -358,6 +384,7 @@ email: "email" etc..
 
 //inside of app component:
 let welcomeMessage
+
 if(this.props.currentUser.isSignedIn) {
   welcomeMessage = <p id="welcome-message">Hello {this.props.currentUser.attributes.email}</p>
 }
@@ -366,23 +393,23 @@ if(this.props.currentUser.isSignedIn) {
 
 ```
 
-# Serialization (the process of converting objects/datatypes to a format that can be transported across the network or persisted)
+# Serialization (the process of converting objects/datatypes to a stream of bytes or a format that can be transported across the network or persisted in a storage, such as files or databases)
 ```rb
 let!(:article) {3.times {FactoryBot.create(:article)}}
 #request specs
 it 'lists a collection of articles' do 
 get '/api/articles'
-#Doing get request to specific URL, the RESTful route
+#Doing get request to specific URL, the RESTful route to get a collection of articles
 json_resp = JSON.parse(response.body)
-#grab response body and turn into json response to have something to compare with
+#grabbing thw response body and turn into json response to have something to compare with
 expect(json_resp['articles'].count).to eq 3
-#check if array returned to us contains 3 objects
+#assertion asking to check if array returned to us contains 3 objects
 end
 
 ArticlesController
 articles = Article.all
 render json: { articles: articles}
-#built in method in Rails to serialize json into objects
+#built in method in Rails to serialize this collection of articles into a json object
 
 #Network calls takes time, they are time consuming and our users want speed.
 
@@ -413,7 +440,127 @@ object.created_at.to_formatted_s(:long)
 
 #Add to the serializer index
 #belongs_to :author or do like with published_at i.e. create new method
+[Link to article of API](https://blog.logrocket.com/common-api-mistakes-and-how-to-avoid-them-804fbcb9cc4b/)
 
 
+```
 
+# Active Storage (Part 1: Backend)
+- The feature we will make is basically be the creation of an article w/o being linked to a user using an image.
+```rb
+$ touch spec/requests/v1/create_article_spec.rb
+
+#Add to above file:
+RSpec.describe 'POST articles create' do
+  describe 'User can post article successfully' do
+    #typical sad path can be a param not being sent in
+    let(:headers){ { HTTP_ACCEPT: "application/json" }}
+
+    before do 
+      post '/v1/articles', params: {
+        title: 'New iPhone on the way',
+        content: 'A lot of new features coming',
+        image: {
+          type: 'application/jpg',
+          encoder: 'name=new_iphone.jpg;base64',
+          data: 'ifsV...',
+          extension: 'jpg'
+          #this is all how the image will look *after* it has been decoded in the backend.
+        }
+      },
+      headers: headers
+      #we have name space v1 and want to make a request to articles with params. When we send of an image through a request we can't send the whole image, therefore we use a base64 decoder so we decode it within the client. On the backend we take that and decode it to get the image. Every image we have has a lot of meta data inside of it (type will have som encoder). Encoder tells us the name of the file and how it's encoded. The data part is the actual image, which is A long long string. I.e. every image can be compiled into data string. 
+      #Inside of the before block we have the actual request that we want to make.
+    end
+
+    it 'returns 200 response' do
+      expect(response.status).to eq 200
+    end
+
+    it 'that has image attached' do
+      article = Article.find_by(title: response.request.params['title'])
+      expect(article.image.attached?).to eq true
+      #everytime you get a response from the backend with the data you ask for, you can always call on .request to see what request you made to get that response, i.e. the response.request in this example
+    end
+  end
+end
+
+#go to config folder to fix routes
+
+resources :articles, only: [:index, :create]
+
+#Go to controller
+def create
+  #if empty will give error 204 = "no content" i.e. no content being returned due to our empty create action
+  @article = Article.create(article_params)
+  attach_image
+  if @article.persisted? && @article.image.attached?
+  #attached is to make it more bullet proof ie. not just persisted but also attached
+    render json: (message: 'Article was successfully created')
+  else 
+    render_error_message(@article.errors.first.to_sentence, 400)
+    #errors is always an array of several error messages
+  end
+end
+
+def article_params
+#here we sanitize what params we are actually going to use to create the articles
+  params.permit[:title, :content, keys: [:image]]
+  #b/c of how the test is written we need to have a key four our object and array.
+end
+
+def attach_image
+  if params['image'] && params['image'].present
+  #if params exists and is present?
+  #we want to call on service:
+  DecodeService.attach_image(params['image'], @article.image)
+end
+
+#Now we get an error due to DecodeService being uninitialized constant
+
+#Create new folder 'services' under app folder
+#Create new file 'decode_service.rb' - important with spelling!!
+
+module DecodeService
+  def self.attach_image(file, target)
+  #need to pass in params and image field of the article
+    if Rails.env == 'test'
+    image = file
+    else
+    image = split_base64(file)
+    #split_base64; how the base 64 string would look like when we send it in to the API; all of the image object content will juist be one huge string with all of the content. i.e. else is how it will look like in production.
+    end
+
+    decoded_data = Base64.decode64(image[:data])
+    #pass in data key from self.split_base64 method
+    io = StringIO.new
+    io.puts(decoded_data)
+    io.rewind
+
+    target.attach(io: io, filename: "base.#{image[:extension]}")
+    #io is a system command for us to create a new file from the data that we get which we have decoded
+    #refresh the variable w rewind, target = @article.image from our controller
+  end
+
+  private 
+  def
+  #we make sure the file looks something like the spec expects when it comes out of the method
+
+  # content
+  end
+end
+
+#Now it's time for us to use Active storage (it allows attaching files to ActiveRecord objects, attachments can be stored locally or uploaded to a cloud storage) Uses polymorphic associations. Basically, we will create an active storage model and associate it to the Article model and then we can create an instance of the AS model and associate it with the article. Active storage model will be associated with our Article model.
+
+>$ rails >active_storage:install:migrati>ons
+#gives us all we need to attach images
+#now run db:migrate
+
+#go to article model, add
+has_one_attached :image
+#now we only allow for one attached image per article
+
+#here we are using instance variables for article only because we are also using it/referring back to it inside of private methods which it won't have access to otherwise.
+
+#base64 is standard ruby and does not need to be installed.
 ```
