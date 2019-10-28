@@ -1332,7 +1332,22 @@ const [email, setEmail] = useState(“”)
 - Remember to declare the dependency array [] as the second argument for useEffect() (where we tell useEffect when it should re-run!), otherwise it will rerun continuously. 
 
 --
-## Oliver
+# How to encrypt an API key.
+
+1. Fetch API key.
+2. Be sure to have a master key to your repo, if not, delete credentials.yml file and run: 
+>$ EDITOR="code --wait" rails credentials:edit
+3. That opens up the VS code, with the secret key inside of it. Edit as follows: 
+>food_api: 
+>  	api_key: <enter-your-api-key>  
+Close the file in VSC, go to terminal, it should say: 
+“New credentials encrypted and saved.”
+5. Now your module FoodService can look like:
+params: {	
+	apiKey:  Rails.application.credentials.food_api[:api_key],
+	ingredients: query
+	}
+Voila! Your api key is stored.
 
 
 
