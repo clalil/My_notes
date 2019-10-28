@@ -513,7 +513,7 @@ def attach_image
   if params['image'] && params['image'].present
   #if params exists and is present?
   #we want to call on service:
-  DecodeService.attach_image(params['image'], @article.image)
+  DecodeService.attach_image(params['image'].first, @article.image)
 end
 
 #Now we get an error due to DecodeService being uninitialized constant
@@ -563,4 +563,8 @@ has_one_attached :image
 #here we are using instance variables for article only because we are also using it/referring back to it inside of private methods which it won't have access to otherwise.
 
 #base64 is standard ruby and does not need to be installed.
+
+#need to have configurations for rack cors to make it work
+
+#in console: @article.image.blob gives us information about the image file once the front end has sent it.
 ```

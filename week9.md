@@ -32,17 +32,19 @@ describe('User can create article', () => {
 
 //go to app.js
 import and render component:
-import CreateArticle from './Components/CreateArticle'
+import CreateArticle from '/Components/CreateArticle'
 <CreateArticle />
 
 //create CreateArticle component
+import ImageUploader from 'react-images-upload' 
 
 class CreateArticle extends Component {
 
   state = {
     renderArticleForm: false,
     title: '',
-    content: ''
+    content: '',
+    image: ''
   }
 
   renderForm = () => {
@@ -57,8 +59,8 @@ class CreateArticle extends Component {
   }
 
   submitArticleHandler = async() => {
-    const { title, content } = this.state
-    let response = await submitArticle(title, content)
+    const { title, content, image } = this.state
+    let response = await submitArticle(title, content, image)
 
     if(response.status === 200) {
       this.setState({
@@ -70,6 +72,11 @@ class CreateArticle extends Component {
       })
     }
   }
+    onAvatarDropHandler = (pictureFiles, pictureDataURLs) => {
+      this.setState({
+        image: pictureDataURLs
+      })
+    }
 
   render() {
     let articleForm
@@ -84,6 +91,14 @@ class CreateArticle extends Component {
         <div id="article-form">
           <input name="title" id="title-input" onBlur={this.inputHandler}/>
           <input name="content" id="content-input" onBlur={this.inputHandler} />
+          <ImageUploader
+            buttonText={"Upload your article image"}
+            withPreview
+            withIcon
+            withLabel={false}
+            onChange={this.onavatarDropHandler}
+            ...
+          />
           <button id="submit-article" onClick={this.submitArticleHandler}>Submit Article</button>
         </div>
       )
@@ -104,12 +119,13 @@ export CreateArticle
 
 //create module inside of ArticlesData.js
 
-const submitArticle = async (title, content) => {
+const submitArticle = async (title, content, image) => {
   try {
     let response = await axios.post(apiUrl + 'articles', 
     {
       title: title,
-      content: content
+      content: content,
+      image: image
     })
 
    return response
@@ -125,4 +141,8 @@ export { submitArticle }
 * onChange = changes state for every letter that you add  
 * onBlur = if you click somewhere else on the screen, the input field is not in focus, then it is blurred out and changes the state.  
 
-## 
+## Image upload
+```js
+//install the package
+>$ yarn add react-images-upload
+```
