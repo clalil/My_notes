@@ -147,13 +147,150 @@ export { submitArticle }
 >$ yarn add react-images-upload
 ```
 
+# Redux
+- Paralell process to your entire application; managing your state outside of your components.
+- Data flow for Redux as a pattern; we have a component and dispatch an action that communicates with the store that is being updated based on whatever action we have dispatched by a reducer that updates the store and then the component subscribes to the store. And when the state changes; the entire component is re-rendered and therefore we can react to state changes and get a new version of the UI.
+- Component => Action => Store (repeating cycle) store <=> reducer (repeating cycle)
+
+## Actions
+- Used to send information from the application to the store (actions are parallell processes).
+- Sending information to the store is needed to change the application state after a user interaction, internal events or API calls.
+- Actions are JS objects; they need to have a type and a payload:
+```js
+//Here the action object has two properties:
+//type: a constant to identify the type of action (mandatory)
+//payload (optional, contains what you want to change your state with i.e. a conditional): the object which is assigned to this property contains the data which are sent to the store.
+//The payload can be whatever object; string, array, functions etc.
+{
+  type: LOGIN_USER,
+  payload: {email: 'user@random.com', password: '123456'}
+}
+```
+- Action objects are created by using functions. These are called **action creators**.
+- The only purpose of an action creator function is to return the action object. (A lot of examples contains action creators: You do not have to use action creators if you don't want.)
+- You can wrap your action dispatcher into a function, so you can call the functions rather than dispatch it manually.
+```js
+const authenticateUser = (credentials) => {
+  return {
+    type: AUTHENTICATE_USER,
+    payload: data
+  }
+}
+```
+- When you want to dispatch an action; disptach is a function that comes in through the Redux library. In this example we are dispatching the action creator, but you can also dispatch the action itself.
+```js
+//Example:
+dispatch(authenticateUser(credentials))
+```
+- What happens with that action is that it is being treated or handled by a **reducer**.
+
+## Reducers
+- Reducers are the most important building block and it's important to understand the concept.
+- Reducers are pure JS functions that take the current application state/or part of the state and an action object you just sent in and return a new application state. I.e. it takes the current state, it receives the action type and the payload and it "updates" (returns the new) the application's state. The application's state that is stored in the store is immutable! 
+- The word reducer originates from a pure JS function that is attached to the array object that is called **reduce**. What it does is: it modifies the array that you want to reduce and returns a new array. (It takes the object that it is supposed to reduce with some new data and returns an object).
+- The action is being sent into a reducer, the reducer takes the current state of the application with the action and returns a new state.
+```js
+//You grab the state, you have the new action and you return the new state
+(state, action) => newState
+//Example (simple)
+const counterReducer = (state, action) => {
+  return state + 1;
+}
+// Example 2 (a little more complex)
+const counterReducer = (state, action) => {
+  if (action, type === 'INCREASE') {
+    return count + 1;
+  }
+    if (action, type === 'DECREASE') {
+    return count - 1;
+  }
+  return count
+}
+//As a switch statement
+const sessionReducer = (state, action) => {
+  switch (action.type) {
+    case 'AUTHENTICATE_USER':
+    return Object.assign{}, state {
+      auth: action.payload
+    }
+    default:
+    return state
+  }
+}
+//The most important thing to notice here is that the state is not changed directly, instead, a new state object (based on the old state) is created and the update is done to the new state.
+```
+## Store
+- The store is the central objects that hold the state of the application. The store is created by using the createStore method from the Redux library.
+- Once the state has been created anew, it is being store in the store; the central object that holds the state of the entire application. We create the store by using a createStore module from Redux that holds all of the data that we want to work with throughout the application. 
+```js
+import { createStore } from 'redux'
+let store = createStore(sessionReducer);
+
+let credentials = {email: 'user@random.com', password: '123456'}
+store.dispatch(authenticateUser(credentials))
+```
+- You need to pass in the reducer function as a parameter. Now you're ready to dispatch an action to the store which is handled by the reducer.
+## Mobsession Redux
+>$ yarn add redux react-redux  
+'redux' = is a library that provides all of 'react-redux' = is the application state functionality  
+is a bridge between redux and the react application that provides that functionality  
+```js
+>$mkdir src/state/reducers
+>$mkdir src/state/store
+>$touch src/state/reducers/rootReducer.js
+>$touch src/state/store/configureStore.js
+>$touch src/state/store/initialState.js (convenience file to store initial state)
+
+//Go into initialState.js
+const initialState = {
+  greeting: 'Hello World from Redux'
+}
+
+export default initialState
+
+//Create reducer function to take initial state and return to whoever asks for it
+//rootReducer.js
+import initialState from '../store/initialState'
+
+const rootReducer = (state = initialState) => {
+  return state
+}
+
+export default rootReducer
+
+//configureStore.js
+import {createStore} from 'redux'
+import rootReducer from '../reducers/rootReducer'
+
+const configureStore = () => {
+  return configureStore(rootReducer)
+  //will be used tos store our data
+}
+
+export default configureStore
+
+//go into index.js
+import {Provider} from 'react-redux'
+import configureStore from './state/store/configureStore'
+
+const store = configureStore()
+
+ReactDom.render(
+  <Provider store={store}>
+  <App/>
+  </Provider>, document.getElementById('root'));
+)
+//Create store and pass it into the provider component as a prop to make it available throughout the entire application
+```
+
+
 # Continuation Redux
 ```js
 
 <Provider store={store}>
 <App/>
 </Provider>
-//the redux wrapper around the app co,poment
+//the redux wrapper around the app copoment
 //Reducer (only does one single thing for us): only returns the initial state!
 
 window.store.getState() //returns the initial state from the store that we get from Redux.
