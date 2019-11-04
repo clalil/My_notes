@@ -486,3 +486,10 @@ end
 //Ta-da!
 //We need to refresh the page as the "indexupdated" just like in cooper challenge, otherwise you need to reload the page.
 ```
+
+# Internationalization
+- We give the app the ability to have multiple languages. I.e. we will translate the layout of the application but not the content itself; for that we need heavy AI going on in the backend.
+- Localization (means we actually add those translations i.e. the process of actually translating this to "click me" in another language) and internationalization (basically means we set up our application so we can have mutli language support).
+```js
+>$  
+```
