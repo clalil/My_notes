@@ -43,3 +43,50 @@ const styles = StyleSheet.create({
   }
 })
 ```
+
+# Mobile implementation (React Native)
+```js
+>$ npm install expo-cli --global
+>$ expo init native_demo
+//Choose blank application, use yarn, add name
+
+//yarn start gets the expo start commands on yarn install
+
+//Open up app.js to start working on app!
+
+//We have a stylesheet for every component and create a hash and a key to use it. To find out what you can use to style, visit React Native homepage.
+
+//New folder called Screens
+//Inside of that folder called Home
+//Inside of that HomeScreen.js
+
+//Services folder (same folder as Moduels folder inside of ours)
+
+//Use backend w(o image attachment to avoid complicating)
+
+//yarn add axios
+
+//Avoid constructor/props from course material. Just use state.
+
+//display in a list, use flatlist, it is basically a list element to use.
+<FlatList 
+data={this.state.articles}
+renderItem={this.renderArticles}
+//renderItem is a type of iterator that will call upon it X times depending on the # of articles we have
+keyExtractor={item => {item.id.toString()}}
+//we do not want it as an integer "for some reason"
+/>
+
+renderArticles = ({ item }) => {
+  const article = item
+  return(
+    <View>
+    <Text>{article.title}</Text>
+    <Text>{article.content}</Text>
+    </View>
+    //view tag is similar to a div tag
+  )
+}
+
+
+```
