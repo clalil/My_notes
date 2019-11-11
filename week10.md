@@ -88,5 +88,36 @@ renderArticles = ({ item }) => {
   )
 }
 
+//Services/AuthService.js
+//we do not have accss to local storage inside of React Native, so we will use AsyncStorage instead (needs to be imported from Reach Native i.e. not external)
 
+//reduxTokenAuth manually puts local storage credentials in for us, but in AsyncStorage we need to put them there ourselves.
+//we need the headers for this response
+//Promise = "this needs to happen before returned here"
+
+//in React Native we do not have onClick but we have onPress
+onPress={{} => this.renderLoginForm}
+
+renderLogin = () => {
+  if(this.state.renderLoginForm) {
+    return (
+      <View>
+      <LoginForm
+        loginHandler={this.onLogin}
+        handleEmail={this.emailStateHandler}
+        handlePassword={this.passwordStateHandler}
+      />
+      </View>
+    )
+  } else {
+      return (
+    <>
+    <Button onPress={() => this.renderLoginForm} />
+    </>
+  )
+}
+
+{renderLogin}
+
+//
 ```
