@@ -2,8 +2,11 @@
 
 ## Rules for final project  
 * components and reducers subfolders in __tests__ folder
-* our folders to user snake_case
+* folders = snake_case
 * folder name lower-case lettering
+* fileNamesForModules (or every file that is NOT a React component) = camelCase
+* FileNameForComponents = PascalCase
+* css-classes  & id's = kebab-case
 * components always named PascalCase with suffix .jsx
 * specs are written in camelCase.spec.js
 * if it is pre JS (modules, not returning jsx) add .js suffix and naming is done with camelCase.
@@ -39,3 +42,19 @@
 7. Search for recipes (elastic search)
 8. Add Oath with Facebook
 8. (Not AS important; comment on recipe or rate them)
+
+## Getting it done! (Project retrospective: reflect, learn, grow)
+What we have practiced:
+- Coding skills (what makes a feature hard to code, is testing helping you writing code? What is scope?)
+- Team collaboration (git flow? planning? remote or co-located? daily routines? workflow?)
+- Communication (what worked? what did not?)
+- Business mindset (who is your customer? who are our users? did we understand the needs of each one?)
+- Agile mindset (iterative and incremental development, did we practice that?)
+
+# RSwag
+```rb
+gem 'rswag'
+```
+- RSwag gem (swag is the standard for using and documenting APIs, and rswag is its interpretation for Rails).
+- In RESTful standard you should be overly clear according to convention to help other developers make the connection between the resources. For example when we return mulitple resources or nested resources.
+
