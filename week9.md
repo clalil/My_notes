@@ -489,7 +489,73 @@ end
 
 # Internationalization
 - We give the app the ability to have multiple languages. I.e. we will translate the layout of the application but not the content itself; for that we need heavy AI going on in the backend.
-- Localization (means we actually add those translations i.e. the process of actually translating this to "click me" in another language) and internationalization (basically means we set up our application so we can have mutli language support).
+- Localization (means we actually add those translations i.e. the process of actually translating this to "click me" in another language).
+- Internationalization (basically means we set up our application so we can have ability to have multi language support). It does not mean that we actually translate the content, but the layout.
+- To translate the **content** we need heavy AI things going on in the background.
+
 ```js
->$  
+//i18next used for React (18 letters in the word internationalization)
+>$ yarn add i18next 
+>$ yarn add i18next-browser-languagedetector
+>$ yarn add i18next-xhr-backend
+>$ yarn add react-i18next
+
+//Create i18in.js file to add packages needed
+import i18n from "i18next";
+import Backend from "i18next-xhr-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
+
+//Provide fallback language & available
+const fallbackLng = ["en"];
+const availableLanguages = ["en", "sv"];
+
+i18n
+//used to load the translations using xhr, this will look into our folder "locales"
+  .use(Backend) 
+//this will detect the language to the browser
+  .use(LanguageDetector) 
+//passes the i18n-instance to the react i18next package
+  .use(initReactI18next) 
+//initializes it with options
+  .init({
+    //if the user's computer language is NOT on the list this fallback language will be triggered
+    fallbackLng, 
+    debug: true,
+    //whitelist the languages we will use
+    whitelist: availableLanguages,
+    //order will affect the tests as well
+    order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
+//in order for us to use the 't' inside of our components
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
+export default i18n;
+
+//import i18n.js to the index.js so it will be available throughout the entire app
+import i18n from './i18n'
+
+//Go into app js, in order for us to make this work the way we have set it up we need 'suspense' which helps us give a fallback, so it will look into the code and make a decision on which language to use based on the browser information. It will take miliseconds, but will make sure that something happens in between these seconds; hence we need something to happen between those miliseconds. Suspense is available through React directly!
+
+//<Suspense fallback={<div>Loading</div>}>
+//<Components />
+//</Suspense>
+
+//We are going to store our language files; Create mkdir public/locales/en/translation.json
+//JSON only accepts DOUBLE quotes, not single quotes
+
+{
+  "weather": {
+    "title": "It's Chilly!"
+  }
+}
+
+//in component
+const { t } = useTranslation()
+
+{t("weather.title")}
+
+
 ```
