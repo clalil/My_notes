@@ -85,5 +85,19 @@ collection = []
 collection.push Recipe.last
 BookGeneratorService.generate_book(collection)
 $ open food_hub_template_draft.pdf
-
 ```
+
+## Deployment
+```js
+//.env (gitignore)
+REACT_APP_NAMEHERE_API_KEY = *secrets*
+//file
+{ key: process.env.REACT_APP_NAMEWHERE_API_KEY}
+//Netlify
+Deploys -> Deploy settings -> environment
+//As is!
+//Although, remember to retract it after assignment done
+```
+
+## Google maps
+>$ npm google-map-react
